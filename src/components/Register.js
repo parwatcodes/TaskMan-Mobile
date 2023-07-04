@@ -1,27 +1,28 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 
-const Register = () => {
+const Register = (props) => {
+  const { email, username } = props;
   return (
     <View style={styles.container}>
       <TextInput
         style={styles.input}
         placeholder="Username"
         value={username}
-        onChangeText={text => setUsername(text)}
+        // onChangeText={text => setUsername(text)}
       />
       <TextInput
         style={styles.input}
         placeholder="Email"
         value={email}
-        onChangeText={text => setEmail(text)}
+        // onChangeText={text => setEmail(text)}
       />
       <TextInput
         style={styles.input}
         placeholder="Password"
         secureTextEntry
         value={password}
-        onChangeText={text => setPassword(text)}
+        // onChangeText={text => setPassword(text)}
       />
       <Button title="Register" onPress={handleRegister} />
     </View>

@@ -1,21 +1,23 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 
-const Login = () => {
+const Login = (props) => {
+  const { email, password, handleLogin } = props;
+
   return (
     <View style={styles.container}>
       <TextInput
         style={styles.input}
         placeholder="Email"
         value={email}
-        onChangeText={text => setEmail(text)}
+        // onChangeText={text => setEmail(text)}
       />
       <TextInput
         style={styles.input}
         placeholder="Password"
         secureTextEntry
         value={password}
-        onChangeText={text => setPassword(text)}
+        // onChangeText={text => setPassword(text)}
       />
       <Button title="Login" onPress={handleLogin} />
     </View>

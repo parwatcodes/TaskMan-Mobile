@@ -1,12 +1,12 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import LoginScreen from '../Screens/LoginScreen';
 import RegisterScreen from '../Screens/RegisterScreen';
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
-const MainStackNavigator = () => {
+const SignedOutStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Login" component={LoginScreen} />
@@ -15,4 +15,4 @@ const MainStackNavigator = () => {
   );
 };
 
-export default MainStackNavigator;
+export default SignedOutStack;
