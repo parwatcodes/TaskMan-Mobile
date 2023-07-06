@@ -4,8 +4,8 @@ import Overview from '../components/Overview';
 
 const OverviewScreen = () => {
   let projects = { type: 'Project', total: 10 };
-  let taskCompleted = { type: 'Task', status: 'completed', total: 15 };
-  let taskPending = { type: 'Task', status: 'pending', total: 10 };
+  let taskCompleted = { type: 'Task', status: 'done', total: 15 };
+  let taskPending = { type: 'Task', status: 'progress', total: 10 };
   let taskInReview = { type: 'Task', status: 'review', total: 20 };
   let taskToDo = { type: 'Task', status: 'todo', total: 5 };
 

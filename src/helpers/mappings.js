@@ -1,11 +1,12 @@
-import { lightGreen, lightBlue, lightPink, lightOrange } from '../constants/colors';
+import { lightGreen, lightBlue, lightPink, lightOrange, lightYellow } from '../constants/colors';
 import { darkGreen, darkYellow, darkRed } from '../constants/colors'
 
 export const statusToCardColor = {
   'todo': lightGreen,
   'progress': lightOrange,
   'review': lightPink,
-  'done': lightBlue
+  'done': lightBlue,
+  'default': lightYellow
 }
 
 export const priorityToLabelColor = {
