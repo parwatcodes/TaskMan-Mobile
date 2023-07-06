@@ -32,8 +32,11 @@ const Login = (props) => {
           value={password}
         // onChangeText={text => setPassword(text)}
         />
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
-          <Button color='#ffff' title="Login" onPress={handleLogin} />
+        <TouchableOpacity style={styles.button}>
+          <Button color={white} title="Login" onPress={() => {
+          console.log('cc')
+          handleLogin()
+        }} />
         </TouchableOpacity >
       </View>
     </View>

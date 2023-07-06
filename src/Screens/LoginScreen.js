@@ -1,20 +1,22 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 import Login from '../components/Login';
 
 const LoginScreen = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const navigation = useNavigation();
 
   const handleLogin = () => {
-    // Implement your login logic here
     console.log('Logging in...');
-    // Add your login code to authenticate the user and navigate to the next screen
+    navigation.navigate('Dashboard');
   };
 
-
   return (
-    <Login handleLogin={handleLogin} />
+    <Login
+      handleLogin={handleLogin}
+    />
   );
 };
 

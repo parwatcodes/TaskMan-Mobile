@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import SignedInStack from './SignedInStack';
 import SignedOutStack from './SignedOutStack';
 
-const Stack = () => {
+const RootStack = () => {
 
   return (
     <NavigationContainer>
@@ -16,7 +16,7 @@ const Stack = () => {
 const StainerContainer = () => {
   let isAuthorized = auth();
 
-  if (isAuthorized) {
+  if (!!isAuthorized) {
     return  <SignedInStack />
   } else {
     return <SignedOutStack />
@@ -28,4 +28,4 @@ function auth() {
 }
 
 
-export default Stack;
+export default RootStack;
