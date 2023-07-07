@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { borderColor, btnBgColor, white } from '../constants/colors';
+import TaskForm from './TaskForm';
 
 const CardView = ({ name, description }) => (
   <View style={styles.card}>
@@ -14,9 +15,15 @@ const CardView = ({ name, description }) => (
 
 const TaskList = (props) => {
   const { data } = props;
+  const [modalVisible, setModalVisible] = React.useState(false);
+
+  const toggleTaskForm = () => {
+    setModalVisible(!modalVisible);
+  }
 
   return (
     <View style={styles.container}>
+      <TaskForm modalVisible={modalVisible} setModalVisible={setModalVisible} />
       <View style={styles.column}>
         <FlatList
           data={data}
@@ -25,7 +32,7 @@ const TaskList = (props) => {
         />
       </View>
       <View style={styles.createBtnWrapper}>
-        <Text style={styles.createBtn}>Create Task</Text>
+        <Text style={styles.createBtn} onPress={toggleTaskForm}>Create Task</Text>
       </View>
     </View>
   );

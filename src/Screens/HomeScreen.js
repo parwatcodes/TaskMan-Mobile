@@ -17,16 +17,6 @@ const HomeScreen = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        title: '',
-        tabBarStyle: {
-          borderTopWidth: 0,
-        },
-        headerStyle: {
-          backgroundColor: 'rgb(239, 239, 239)',
-          shadowColor: 'transparent'
-        },
-      }}
-      tabBarOptions={{
         activeTintColor: 'red',
         showIcon: true,
         showLabel: false,
@@ -37,6 +27,14 @@ const HomeScreen = () => {
         tabStyle: {
           margin: 0.2,
           borderRadius: 2,
+        },
+        title: '',
+        tabBarStyle: {
+          borderTopWidth: 0,
+        },
+        headerStyle: {
+          backgroundColor: 'rgb(239, 239, 239)',
+          shadowColor: 'transparent'
         },
       }}
     >
