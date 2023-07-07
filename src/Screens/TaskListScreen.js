@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Task from '../components/Task';
+import TaskList from '../components/TaskList';
 
-const TaskScreen = () => {
+const TaskListScreen = () => {
   const data = [
     { name: 'QuantumSphere', description: 'Exploring the boundaries of quantum computing and its applications.' },
     { name: 'PixelQuest', description: 'Embark on a pixelated adventure through a retro-inspired gaming world.' },
@@ -12,8 +12,8 @@ const TaskScreen = () => {
   ];
 
   return (
-    <Task data={data} />
+    <TaskList data={data} />
   )
 }
 
-export default TaskScreen;
+export default TaskListScreen;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
-import { borderColor } from '../constants/colors';
+import { borderColor, btnBgColor, white } from '../constants/colors';
 
 const CardView = ({ name, description }) => (
   <View style={styles.card}>
@@ -12,7 +12,7 @@ const CardView = ({ name, description }) => (
   </View>
 );
 
-const Task = (props) => {
+const TaskList = (props) => {
   const { data } = props;
 
   return (
@@ -24,12 +24,8 @@ const Task = (props) => {
           keyExtractor={(item, index) => index.toString()}
         />
       </View>
-      <View style={styles.column}>
-        <FlatList
-          data={data}
-          renderItem={({ item }) => <CardView name={item.name} description={item.description} />}
-          keyExtractor={(item, index) => index.toString()}
-        />
+      <View style={styles.createBtnWrapper}>
+        <Text style={styles.createBtn}>Create Task</Text>
       </View>
     </View>
   );
@@ -66,6 +62,23 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#888',
   },
+  createBtnWrapper: {
+    position: 'absolute',
+    backgroundColor: btnBgColor,
+    bottom: 0,
+    paddingLeft: 40,
+    paddingRight: 40,
+    paddingTop: 15,
+    paddingBottom: 15,
+    zIndex: 1111,
+    marginBottom: 10,
+    borderRadius: 50
+  },
+  createBtn: {
+    color: white,
+    fontSize: 16,
+    fontWeight: 700,
+  }
 });
 
-export default Task;
+export default TaskList;

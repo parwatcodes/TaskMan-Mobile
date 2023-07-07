@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 
 import { statusToCardColor } from '../helpers/mappings';
+import { white } from '../constants/colors';
 
 const renderItem = ({ item }) => (
   <View style={styles.itemContainer}>
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f9f9f9',
     padding: 16,
     borderRadius: 8,
-    minHeight: 120,
+    minHeight: 110,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,

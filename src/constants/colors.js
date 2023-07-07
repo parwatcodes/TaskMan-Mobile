@@ -1,4 +1,4 @@
-export const white = '#FFFFF';
+export const white = '#FFFF';
 export const borderColor = '#CECACA';
 export const backgroundColor = '#EDEFF3';
 
@@ -14,3 +14,6 @@ export const darkGreen = '#03C988';
 export const darkYellow = '#ECB365';
 export const darkRed = '#D21312';
 export const darkBlue = '#2B2BB3'
+
+// Button colors
+export const btnBgColor = '#EA592C'

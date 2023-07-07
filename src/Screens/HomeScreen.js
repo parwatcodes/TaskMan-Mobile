@@ -1,49 +1,69 @@
 import React from 'react';
-import IonIcon from 'react-native-vector-icons/Ionicons';
-import OctiIcon from 'react-native-vector-icons/Octicons';
+import { View, Text, StyleSheet, FlatList, TextInput } from 'react-native';
+import FoundationIcon from 'react-native-vector-icons/Foundation';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import TaskScreen from './TaskScreen';
+import TaskListScreen from './TaskListScreen';
 import ProjectScreen from './ProjectScreen';
 import OverviewScreen from './OverviewScreen';
-import { darkBlue } from '../constants/colors';
+import { darkBlue, white } from '../constants/colors';
 
 const Tab = createBottomTabNavigator();
 
-let tabBarIconSize = 24;
-let tabBarLabelStyle = {
-  fontSize: 12,
-  fontWeight: 500
-};
-
 const HomeScreen = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        title: '',
+        tabBarStyle: {
+          borderTopWidth: 0,
+        },
+        headerStyle: {
+          backgroundColor: 'rgb(239, 239, 239)',
+          shadowColor: 'transparent'
+        },
+      }}
+      tabBarOptions={{
+        activeTintColor: 'red',
+        showIcon: true,
+        showLabel: false,
+        iconStyle: {
+          width: 'auto',
+          height: 28,
+        },
+        tabStyle: {
+          margin: 0.2,
+          borderRadius: 2,
+        },
+      }}
+    >
       <Tab.Screen name="Overview" component={OverviewScreen} options={{
         tabBarIcon: ({ color, size }) => (
-          <IonIcon size={tabBarIconSize} color={darkBlue} name="ios-grid-outline" />
-        ),
-        tabBarLabelStyle
+          <FoundationIcon size={size} color={darkBlue} name="home" />
+        )
       }} />
       <Tab.Screen name="Project" component={ProjectScreen} options={{
         tabBarIcon: ({ color, size }) => (
-          <OctiIcon size={tabBarIconSize} color={darkBlue} name="project" />
-        ),
-        tabBarLabelStyle
+          <MCIcon size={size} color={darkBlue} name="card-bulleted-outline" />
+        )
       }} />
-      <Tab.Screen name="Task" component={TaskScreen} options={{
+      <Tab.Screen name="Task" component={TaskListScreen} options={{
         tabBarIcon: ({ color, size }) => (
-          <FontAwesome5Icon size={tabBarIconSize} color={darkBlue} name="tasks" />
-        ),
-        tabBarLabelStyle
+          <FontAwesome5Icon size={size} color={darkBlue} name="tasks" />
+        )
       }} />
-      <Tab.Screen name="Member" component={TaskScreen} options={{
+      <Tab.Screen name="Member" component={TaskListScreen} options={{
         tabBarIcon: ({ color, size }) => (
-          <FeatherIcon size={tabBarIconSize} color={darkBlue} name="users" />
-        ),
-        tabBarLabelStyle
+          <FeatherIcon size={size} color={darkBlue} name="users" />
+        )
+      }} />
+      <Tab.Screen name="Profile" component={TaskListScreen} options={{
+        tabBarIcon: ({ color, size }) => (
+          <FontAwesome5Icon size={size} color={darkBlue} name="user-circle" />
+        )
       }} />
     </Tab.Navigator>
   );
