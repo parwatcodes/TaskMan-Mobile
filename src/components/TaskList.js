@@ -32,11 +32,9 @@ const TaskList = (props) => {
           keyExtractor={(item, index) => index.toString()}
         />
       </View>
-      <View style={styles.createBtnWrapper}>
-        <Pressable onPress={toggleTaskForm}>
-          <Text style={styles.createBtn}>Create Task</Text>
-        </Pressable>
-      </View>
+      <Pressable style={styles.createBtnWrapper} onPress={toggleTaskForm}>
+        <Text style={styles.createBtn}>Create Task</Text>
+      </Pressable>
     </View>
   );
 };
