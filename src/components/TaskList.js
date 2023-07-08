@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
+
 import { borderColor, btnBgColor, white } from '../constants/colors';
 import TaskForm from './TaskForm';
 
@@ -19,7 +20,7 @@ const TaskList = (props) => {
 
   const toggleTaskForm = () => {
     setModalVisible(!modalVisible);
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -32,7 +33,9 @@ const TaskList = (props) => {
         />
       </View>
       <View style={styles.createBtnWrapper}>
-        <Text style={styles.createBtn} onPress={toggleTaskForm}>Create Task</Text>
+        <Pressable onPress={toggleTaskForm}>
+          <Text style={styles.createBtn}>Create Task</Text>
+        </Pressable>
       </View>
     </View>
   );
