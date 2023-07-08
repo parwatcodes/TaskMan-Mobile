@@ -1,15 +1,41 @@
 import React from 'react';
+import AntIcon from 'react-native-vector-icons/AntDesign';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
 
-import { borderColor, btnBgColor, white } from '../constants/colors';
 import TaskForm from './TaskForm';
+import { TASK_STATUS } from '../constants';
+import { priorityToLabelColor, statusToCardColor } from '../helpers/mappings';
+import { borderColor, btnBgColor, lightBlue, white } from '../constants/colors';
 
-const CardView = ({ name, description }) => (
+const CardView = ({ task }) => (
   <View style={styles.card}>
-    <Text style={styles.name}>{name}</Text>
-    <Text style={styles.description}>{description}</Text>
-    <View style={{ borderBottomColor: borderColor, borderBottomWidth: 0.5, marginTop: 10 }} />
-    <View>
+    <Text style={styles.name}>{task.name}</Text>
+    <Text style={styles.description}>{task.description}</Text>
+    <View style={{ borderBottomColor: borderColor, borderBottomWidth: 0.3, marginTop: 10 }} />
+    <View style={{ flexDirection: 'row', marginVertical: 5 }}>
+      <AntIcon size={16} name="user" />
+      <Text style={{
+        fontWeight: 500,
+        fontSize: 14,
+      }}>{task.assigneeName}</Text>
+    </View>
+    <View style={{ borderBottomColor: borderColor, borderBottomWidth: 0.5 }} />
+    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end',  marginTop: 10 }}>
+      <Text style={{
+        paddingHorizontal: 10,
+        paddingVertical: 2,
+        overflow: 'hidden',
+        borderRadius: 5,
+        backgroundColor: statusToCardColor[task.status]
+      }}>{TASK_STATUS[task.status]}</Text>
+      <FontAwesomeIcon size={20} color={priorityToLabelColor[task.priority]} name="tag" />
+      <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 10}}>
+        <MCIcon size={20} name="clock" />
+        <Text style={{ fontWeight: 500, marginLeft: 2}}>{task.startDate}</Text>
+      </View>
     </View>
   </View>
 );
@@ -28,7 +54,7 @@ const TaskList = (props) => {
       <View style={styles.column}>
         <FlatList
           data={data}
-          renderItem={({ item }) => <CardView name={item.name} description={item.description} />}
+          renderItem={({ item }) => <CardView task={item} />}
           keyExtractor={(item, index) => index.toString()}
         />
       </View>
