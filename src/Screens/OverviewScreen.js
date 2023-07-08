@@ -8,8 +8,9 @@ const OverviewScreen = () => {
   let taskPending = { type: 'Task', status: 'progress', total: 10 };
   let taskInReview = { type: 'Task', status: 'review', total: 20 };
   let taskToDo = { type: 'Task', status: 'todo', total: 5 };
+  let taskHold = { type: 'Task', status: 'hold', total: 5 };
 
-  let data = [projects, taskCompleted, taskPending, taskInReview, taskToDo];
+  let data = [taskToDo, taskPending, taskInReview, taskHold, taskCompleted, projects];
 
   return (
     <Overview data={data} />

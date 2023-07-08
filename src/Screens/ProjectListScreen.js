@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Project from '../components/Project';
+import ProjectList from '../components/ProjectList';
 
-const ProjectScreen = () => {
+const ProjectListScreen = () => {
   const data = [
     { name: 'QuantumSphere', description: 'Exploring the boundaries of quantum computing and its applications.', status: 'not-started' },
     { name: 'PixelQuest', description: 'Embark on a pixelated adventure through a retro-inspired gaming world.', status: 'on-going' },
@@ -12,8 +12,8 @@ const ProjectScreen = () => {
   ];
 
   return (
-    <Project data={data} />
+    <ProjectList data={data} />
   );
 };
 
-export default ProjectScreen;
+export default ProjectListScreen;

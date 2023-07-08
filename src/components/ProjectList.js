@@ -1,8 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
-import { backgroundColor, btnBgColor, white } from '../constants/colors';
-import { projectStatusColor } from '../helpers/mappings';
+import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
+
+import ProjectForm from './ProjectForm';
 import { PROJECT_STATUS } from '../constants/index';
+import { projectStatusColor } from '../helpers/mappings';
+import { backgroundColor, btnBgColor, white } from '../constants/colors';
 
 const CardView = ({ item }) => (
   <View style={styles.card}>
@@ -30,14 +32,20 @@ const CardView = ({ item }) => (
   </View>
 );
 
-const Project = (props) => {
+const ProjectList = (props) => {
   const { data } = props;
+  const [modalVisible, setModalVisible] = React.useState(false);
+
+  const toggleProjectForm = () => {
+    setModalVisible(!modalVisible);
+  };
 
   return (
     <View style={styles.container}>
-      <View style={styles.btnWrapper}>
+      <ProjectForm modalVisible={modalVisible} setModalVisible={setModalVisible} />
+      <Pressable style={styles.btnWrapper} onPress={toggleProjectForm}>
         <Text style={styles.createBtn}>Create Project</Text>
-      </View>
+      </Pressable>
       <View style={styles.column}>
         <FlatList
           data={data}
@@ -54,7 +62,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    padding: 20,
+    paddingHorizontal: 10
   },
   container2: {
     flex: 1,
@@ -67,10 +75,10 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: 'white',
-    borderRadius: 20,
+    borderRadius: 8,
     padding: 20,
     minHeight: 150,
-    marginBottom: 20,
+    marginBottom: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -114,7 +122,9 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     zIndex: 1111,
     marginBottom: 10,
-    borderRadius: 50
+    borderRadius: 50,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 5
   },
   createBtn: {
     color: white,
@@ -123,4 +133,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Project;
+export default ProjectList;

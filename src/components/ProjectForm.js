@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
+import IonIcon from 'react-native-vector-icons/Ionicons';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { View, Text, StyleSheet, Pressable, TextInput, Modal, TouchableOpacity, Button } from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import IonIcon from 'react-native-vector-icons/Ionicons';
 
-import { borderColor, darkBlue, lightBlue, white } from '../constants/colors';
-import { TASK_PRIORITY_LABEL, TASK_STATUS } from '../constants';
 import { transformObject } from '../helpers/utils';
+import { borderColor, darkBlue, lightBlue, white } from '../constants/colors';
+import { TASK_PRIORITY_LABEL, PROJECT_STATUS } from '../constants';
 
-const TaskForm = (props) => {
+const ProjectForm = (props) => {
   const { modalVisible, setModalVisible } = props;
   const [selected, setSelected] = React.useState("");
 
-  let taskStatus = transformObject(TASK_STATUS);
+  let projectStatus = transformObject(PROJECT_STATUS);
   let taskPriority = transformObject(TASK_PRIORITY_LABEL);
   const [date, setDate] = useState(new Date());
 
@@ -43,12 +42,12 @@ const TaskForm = (props) => {
             }} onPress={() => setModalVisible(!modalVisible)}>
               <IonIcon size={40} color={'grey'} name="ios-close-circle-outline" />
             </Pressable>
-            <Text style={styles.modalText}>Create a Task</Text>
+            <Text style={styles.modalText}>Create a Project</Text>
             <View>
               <View style={{
                 marginBottom: 15
               }}>
-                <Text style={styles.textLabel}>Title</Text>
+                <Text style={styles.textLabel}>Name</Text>
                 <TextInput style={styles.textInput} value='' />
               </View>
               <View style={{
@@ -60,11 +59,12 @@ const TaskForm = (props) => {
               <View style={{
                 marginBottom: 15
               }}>
-                <Text style={styles.textLabel}>Project</Text>
+                <Text style={styles.textLabel}>Status</Text>
                 <SelectList
                   setSelected={(val) => setSelected(val)}
-                  data={taskPriority}
+                  data={projectStatus}
                   save="value"
+                  search={false}
                   boxStyles={styles.dropdownStyles}
                   dropdownStyles={styles.dropdownStyles}
                   dropdownItemStyles={styles.dropdownItemStyles}
@@ -74,90 +74,16 @@ const TaskForm = (props) => {
               <View style={{
                 marginBottom: 15
               }}>
-                <Text style={styles.textLabel}>Member</Text>
+                <Text style={styles.textLabel}>Add member</Text>
                 <SelectList
                   setSelected={(val) => setSelected(val)}
-                  data={taskPriority}
+                  data={projectStatus}
                   save="value"
+                  search={false}
                   boxStyles={styles.dropdownStyles}
                   dropdownStyles={styles.dropdownStyles}
                   dropdownItemStyles={styles.dropdownItemStyles}
                   dropdownTextStyles={styles.dropdownTextStyles}
-                />
-              </View>
-              <View style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                width: '100%',
-                marginBottom: 15
-              }}>
-                <View style={{
-                  width: '48%'
-                }}>
-                  <Text style={styles.textLabel}>Status</Text>
-                  <SelectList
-                    setSelected={(val) => setSelected(val)}
-                    data={taskStatus}
-                    save="value"
-                    search={false}
-                    boxStyles={styles.dropdownStyles}
-                    dropdownStyles={styles.dropdownStyles}
-                    dropdownItemStyles={styles.dropdownItemStyles}
-                    dropdownTextStyles={styles.dropdownTextStyles}
-                  />
-                </View>
-                <View style={{
-                  width: '48%'
-                }}>
-                  <Text style={styles.textLabel}>Priority</Text>
-                  <SelectList
-                    setSelected={(val) => setSelected(val)}
-                    data={taskPriority}
-                    save="value"
-                    search={false}
-                    boxStyles={styles.dropdownStyles}
-                    dropdownStyles={styles.dropdownStyles}
-                    dropdownItemStyles={styles.dropdownItemStyles}
-                    dropdownTextStyles={styles.dropdownTextStyles}
-                  />
-                </View>
-
-
-              </View>
-              <View style={{
-                marginBottom: 15,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-              }}>
-                <Text style={styles.textLabelDate}>Start Date</Text>
-                <DateTimePicker
-                  testID="dateTimePicker"
-                  value={date}
-                  mode='datetime'
-                  is24Hour={true}
-                  onChange={onChange}
-                  style={{
-                    alignSelf: 'flex-end'
-                  }}
-                />
-              </View>
-              <View style={{
-                marginBottom: 15,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-              }}>
-                <Text style={styles.textLabelDate}>End Date</Text>
-                <DateTimePicker
-                  testID="dateTimePicker"
-                  value={date}
-                  mode='datetime'
-                  is24Hour={true}
-                  onChange={onChange}
-                  style={{
-                    alignSelf: 'flex-end'
-                  }}
                 />
               </View>
               <TouchableOpacity style={styles.doneBtnWrapper}>
@@ -261,4 +187,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default TaskForm;
+export default ProjectForm;

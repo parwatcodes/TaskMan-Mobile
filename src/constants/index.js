@@ -19,3 +19,8 @@ export const TASK_PRIORITY_LABEL = {
   medium: 'Medium',
   high: 'High'
 };
+
+export const USER_ROLE = {
+  member: 'Member',
+  admin: 'Admin'
+}

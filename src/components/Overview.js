@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 
 import { statusToCardColor } from '../helpers/mappings';
-import { white } from '../constants/colors';
+import { goldTips, portage, white } from '../constants/colors';
 
 const renderItem = ({ item }) => (
   <View style={styles.itemContainer}>
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     fontWeight: 500
   },
   reportContainer: {
-    backgroundColor: 'yellow',
+    backgroundColor: goldTips,
     height: '50%',
     marginTop: 10,
     marginBottom: 10,

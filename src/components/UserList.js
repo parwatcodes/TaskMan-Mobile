@@ -1,57 +1,35 @@
 import React from 'react';
-import AntIcon from 'react-native-vector-icons/AntDesign';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import EnTypoIcon from 'react-native-vector-icons/Entypo';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
 
-import TaskForm from './TaskForm';
-import { TASK_STATUS } from '../constants';
-import { priorityToLabelColor, statusToCardColor } from '../helpers/mappings';
+import UserForm from './UserForm';
 import { borderColor, btnBgColor, darkBlue, lightBlue, white } from '../constants/colors';
 
-const CardView = ({ task }) => (
+const CardView = ({ user }) => (
   <View style={styles.card}>
-    <Text style={styles.name}>{task.name}</Text>
-    <Text style={styles.description}>{task.description}</Text>
+    <Text style={styles.name}>{user.name}</Text>
+    <Text style={styles.description}>{user.email}</Text>
+    <Text style={styles.description}>Role: {user.role}</Text>
     <View style={{ borderBottomColor: borderColor, borderBottomWidth: 0.3, marginTop: 10 }} />
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 5 }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-
-        <EnTypoIcon size={14} name="flow-tree" />
+    <View style={{ flexDirection: 'column', justifyContent: 'center', marginVertical: 5 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+        <EnTypoIcon color={darkBlue} size={14} name="flow-tree" />
         <Text style={{
           fontWeight: 600,
           fontSize: 14,
           marginLeft: 5
-        }}>{'Project ABC'}</Text>
+        }}>{user.totalProjects} project involved in.</Text>
       </View>
 
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <AntIcon size={14} name="arrowright" />
-        <AntIcon size={14} name="user" />
+        <FontAwesome5Icon size={14} color={darkBlue} name="tasks" />
         <Text style={{
           fontWeight: 500,
           fontSize: 14,
           marginLeft: 5
-        }}>{task.assigneeName}</Text>
-      </View>
-    </View>
-    <View style={{ borderBottomColor: borderColor, borderBottomWidth: 0.5 }} />
-    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 10 }}>
-      <Text style={{
-        paddingHorizontal: 10,
-        paddingVertical: 2,
-        overflow: 'hidden',
-        borderRadius: 5,
-        color: white,
-        fontWeight: 500,
-        backgroundColor: statusToCardColor[task.status],
-      }}>{TASK_STATUS[task.status]}</Text>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 10 }}>
-      <FontAwesomeIcon style={{marginRight: 10}} size={20} color={priorityToLabelColor[task.priority]} name="tag" />
-        <MCIcon size={20} name="clock" />
-        <Text style={{ fontWeight: 500, marginLeft: 2 }}>{task.startDate}</Text>
+        }}>{user.totalTask} task assigned.</Text>
       </View>
     </View>
   </View>
@@ -61,22 +39,22 @@ const TaskList = (props) => {
   const { data } = props;
   const [modalVisible, setModalVisible] = React.useState(false);
 
-  const toggleTaskForm = () => {
+  const toggleUserForm = () => {
     setModalVisible(!modalVisible);
   };
 
   return (
     <View style={styles.container}>
-      <TaskForm modalVisible={modalVisible} setModalVisible={setModalVisible} />
+      <UserForm modalVisible={modalVisible} setModalVisible={setModalVisible} />
       <View style={styles.column}>
         <FlatList
           data={data}
-          renderItem={({ item }) => <CardView task={item} />}
+          renderItem={({ item }) => <CardView user={item} />}
           keyExtractor={(item, index) => index.toString()}
         />
       </View>
-      <Pressable style={styles.createBtnWrapper} onPress={toggleTaskForm}>
-        <Text style={styles.createBtn}>Create Task</Text>
+      <Pressable style={styles.createBtnWrapper} onPress={toggleUserForm}>
+        <Text style={styles.createBtn}>Create User</Text>
       </Pressable>
     </View>
   );
@@ -126,7 +104,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 5,
-    shadowRadius: 2
+    shadowRadius: 2,
   },
   createBtn: {
     color: white,

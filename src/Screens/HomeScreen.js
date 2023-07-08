@@ -1,14 +1,14 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList, TextInput } from 'react-native';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 import FoundationIcon from 'react-native-vector-icons/Foundation';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import FeatherIcon from 'react-native-vector-icons/Feather';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import TaskListScreen from './TaskListScreen';
-import ProjectScreen from './ProjectScreen';
 import OverviewScreen from './OverviewScreen';
+import UserListScreen from './UserListScreen';
+import ProjectListScreen from './ProjectListScreen';
 import { darkBlue, white } from '../constants/colors';
 
 const Tab = createBottomTabNavigator();
@@ -28,7 +28,6 @@ const HomeScreen = () => {
           margin: 0.2,
           borderRadius: 2,
         },
-        title: '',
         tabBarStyle: {
           borderTopWidth: 0,
         },
@@ -43,7 +42,7 @@ const HomeScreen = () => {
           <FoundationIcon size={size} color={darkBlue} name="home" />
         )
       }} />
-      <Tab.Screen name="Project" component={ProjectScreen} options={{
+      <Tab.Screen name="Project" component={ProjectListScreen} options={{
         tabBarIcon: ({ color, size }) => (
           <MCIcon size={size} color={darkBlue} name="card-bulleted-outline" />
         )
@@ -53,7 +52,7 @@ const HomeScreen = () => {
           <FontAwesome5Icon size={size} color={darkBlue} name="tasks" />
         )
       }} />
-      <Tab.Screen name="Member" component={TaskListScreen} options={{
+      <Tab.Screen name="Member" component={UserListScreen} options={{
         tabBarIcon: ({ color, size }) => (
           <FeatherIcon size={size} color={darkBlue} name="users" />
         )
