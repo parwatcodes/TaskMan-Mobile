@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import IonIcon from 'react-native-vector-icons/Ionicons';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { View, Text, StyleSheet, Pressable, TextInput, Modal, TouchableOpacity, Button } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import IonIcon from 'react-native-vector-icons/Ionicons';
 
-import { transformObject } from '../helpers/utils';
-import { borderColor, darkBlue, lightBlue, white } from '../constants/colors';
-import { TASK_PRIORITY_LABEL, PROJECT_STATUS } from '../constants';
+import { borderColor, darkBlue, lightBlue, white } from '../../constants/colors';
+import { TASK_PRIORITY_LABEL, TASK_STATUS } from '../../constants';
+import { transformObject } from '../../helpers/utils';
 
-const ProjectForm = (props) => {
+const TaskForm = (props) => {
   const { modalVisible, setModalVisible } = props;
   const [selected, setSelected] = React.useState("");
 
-  let projectStatus = transformObject(PROJECT_STATUS);
+  let taskStatus = transformObject(TASK_STATUS);
   let taskPriority = transformObject(TASK_PRIORITY_LABEL);
   const [date, setDate] = useState(new Date());
 
@@ -42,12 +43,12 @@ const ProjectForm = (props) => {
             }} onPress={() => setModalVisible(!modalVisible)}>
               <IonIcon size={40} color={'grey'} name="ios-close-circle-outline" />
             </Pressable>
-            <Text style={styles.modalText}>Create a Project</Text>
+            <Text style={styles.modalText}>Create a Task</Text>
             <View>
               <View style={{
                 marginBottom: 15
               }}>
-                <Text style={styles.textLabel}>Name</Text>
+                <Text style={styles.textLabel}>Title</Text>
                 <TextInput style={styles.textInput} value='' />
               </View>
               <View style={{
@@ -59,12 +60,11 @@ const ProjectForm = (props) => {
               <View style={{
                 marginBottom: 15
               }}>
-                <Text style={styles.textLabel}>Status</Text>
+                <Text style={styles.textLabel}>Project</Text>
                 <SelectList
                   setSelected={(val) => setSelected(val)}
-                  data={projectStatus}
+                  data={taskPriority}
                   save="value"
-                  search={false}
                   boxStyles={styles.dropdownStyles}
                   dropdownStyles={styles.dropdownStyles}
                   dropdownItemStyles={styles.dropdownItemStyles}
@@ -74,16 +74,90 @@ const ProjectForm = (props) => {
               <View style={{
                 marginBottom: 15
               }}>
-                <Text style={styles.textLabel}>Add member</Text>
+                <Text style={styles.textLabel}>Member</Text>
                 <SelectList
                   setSelected={(val) => setSelected(val)}
-                  data={projectStatus}
+                  data={taskPriority}
                   save="value"
-                  search={false}
                   boxStyles={styles.dropdownStyles}
                   dropdownStyles={styles.dropdownStyles}
                   dropdownItemStyles={styles.dropdownItemStyles}
                   dropdownTextStyles={styles.dropdownTextStyles}
+                />
+              </View>
+              <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: '100%',
+                marginBottom: 15
+              }}>
+                <View style={{
+                  width: '48%'
+                }}>
+                  <Text style={styles.textLabel}>Status</Text>
+                  <SelectList
+                    setSelected={(val) => setSelected(val)}
+                    data={taskStatus}
+                    save="value"
+                    search={false}
+                    boxStyles={styles.dropdownStyles}
+                    dropdownStyles={styles.dropdownStyles}
+                    dropdownItemStyles={styles.dropdownItemStyles}
+                    dropdownTextStyles={styles.dropdownTextStyles}
+                  />
+                </View>
+                <View style={{
+                  width: '48%'
+                }}>
+                  <Text style={styles.textLabel}>Priority</Text>
+                  <SelectList
+                    setSelected={(val) => setSelected(val)}
+                    data={taskPriority}
+                    save="value"
+                    search={false}
+                    boxStyles={styles.dropdownStyles}
+                    dropdownStyles={styles.dropdownStyles}
+                    dropdownItemStyles={styles.dropdownItemStyles}
+                    dropdownTextStyles={styles.dropdownTextStyles}
+                  />
+                </View>
+
+
+              </View>
+              <View style={{
+                marginBottom: 15,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }}>
+                <Text style={styles.textLabelDate}>Start Date</Text>
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  value={date}
+                  mode='datetime'
+                  is24Hour={true}
+                  onChange={onChange}
+                  style={{
+                    alignSelf: 'flex-end'
+                  }}
+                />
+              </View>
+              <View style={{
+                marginBottom: 15,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }}>
+                <Text style={styles.textLabelDate}>End Date</Text>
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  value={date}
+                  mode='datetime'
+                  is24Hour={true}
+                  onChange={onChange}
+                  style={{
+                    alignSelf: 'flex-end'
+                  }}
                 />
               </View>
               <TouchableOpacity style={styles.doneBtnWrapper}>
@@ -187,4 +261,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default ProjectForm;
+export default TaskForm;

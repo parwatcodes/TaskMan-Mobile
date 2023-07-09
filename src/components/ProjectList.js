@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
 
-import ProjectForm from './ProjectForm';
+import ProjectForm from './Form/ProjectForm';
 import { PROJECT_STATUS } from '../constants/index';
 import { projectStatusColor } from '../helpers/mappings';
 import { backgroundColor, btnBgColor, lightBlue, white } from '../constants/colors';

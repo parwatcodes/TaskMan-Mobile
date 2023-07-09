@@ -4,7 +4,7 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
 
-import UserForm from './UserForm';
+import UserForm from './Form/UserForm';
 import { borderColor, btnBgColor, darkBlue, lightBlue, white } from '../constants/colors';
 
 const CardView = ({ user }) => (
