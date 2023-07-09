@@ -18,7 +18,6 @@ const Overview = (props) => {
 
   return (
     <View style={styles.container}>
-
     <FlatList
       data={data}
       numColumns={2}
@@ -43,7 +42,6 @@ const styles = StyleSheet.create({
     margin: 4,
   },
   item: {
-    backgroundColor: '#f9f9f9',
     padding: 16,
     borderRadius: 8,
     minHeight: 110,
@@ -51,7 +49,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
-    elevation: 2,
+    elevation: 2
   },
   title: {
     fontSize: 16,

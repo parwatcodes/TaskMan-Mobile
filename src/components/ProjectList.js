@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
 import ProjectForm from './ProjectForm';
 import { PROJECT_STATUS } from '../constants/index';
 import { projectStatusColor } from '../helpers/mappings';
-import { backgroundColor, btnBgColor, white } from '../constants/colors';
+import { backgroundColor, btnBgColor, lightBlue, white } from '../constants/colors';
 
 const CardView = ({ item }) => (
   <View style={styles.card}>
@@ -12,9 +12,9 @@ const CardView = ({ item }) => (
     <View>
       <Text>Members: </Text>
       <View style={{ flexDirection: 'row', marginTop: 5 }}>
-        <Text style={styles.circle}></Text>
-        <Text style={styles.circle}></Text>
-        <Text style={styles.circle}></Text>
+        <Text style={styles.circle}>PK</Text>
+        <Text style={styles.circle}>JK</Text>
+        <Text style={styles.circle}>AP</Text>
       </View>
     </View>
     <View style={{ flexDirection: 'row', marginTop: 5, justifyContent: 'space-between' }}>
@@ -98,18 +98,23 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     borderRadius: 25 / 2,
-    backgroundColor: 'yellow',
-    marginRight: 5
+    backgroundColor: lightBlue,
+    paddingTop: 6,
+    marginRight: 2,
+    overflow: 'hidden',
+    color: white,
+    fontSize: 10,
+    fontWeight: 600,
+    textAlign: "center"
   },
   projectStatus: {
     backgroundColor: 'blue',
     color: white,
-    paddingTop: 8,
-    paddingBottom: 8,
-    paddingLeft: 12,
-    paddingRight: 12,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
     fontWeight: 600,
-    borderRadius: 10,
+    borderRadius: 5,
+    fontSize: 12,
     overflow: 'hidden'
   },
   btnWrapper: {
