@@ -9,3 +9,11 @@ export const transformObject = (data) => {
     value: data[key]
   }));
 };
+
+export function stringifyIt(data) {
+  return JSON.stringify(data);
+}
+
+export function parseIt(data) {
+  return JSON.parse(data);
+}

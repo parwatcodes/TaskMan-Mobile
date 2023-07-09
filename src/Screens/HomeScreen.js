@@ -17,7 +17,6 @@ const Tab = createBottomTabNavigator();
 const HomeScreen = () => {
   return (
     <Tab.Navigator
-
       screenOptions={{
         tabBarActiveTintColor: 'green',
         headerTitleAlign: 'left',
