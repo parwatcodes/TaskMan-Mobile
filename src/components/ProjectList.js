@@ -5,8 +5,8 @@ import ProjectForm from './Form/ProjectForm';
 import { projectStatusColor, PROJECT_STATUS } from '../helpers/mappings';
 import { backgroundColor, btnBgColor, lightBlue, white } from '../helpers/colors';
 
-const CardView = ({ item }) => (
-  <View style={styles.card}>
+const CardView = ({ item, handleOnProjectClick }) => (
+  <Pressable style={styles.card} onPress={handleOnProjectClick}>
     <Text style={styles.name}>{item.name}</Text>
     <View>
       <Text>Members: </Text>
@@ -28,7 +28,7 @@ const CardView = ({ item }) => (
         }}>{PROJECT_STATUS[item.status]}</Text>
       </View>
     </View>
-  </View>
+  </Pressable>
 );
 
 const ProjectList = (props) => {
@@ -48,7 +48,9 @@ const ProjectList = (props) => {
       <View style={styles.column}>
         <FlatList
           data={data}
-          renderItem={({ item }) => <CardView item={item} />}
+          renderItem={({ item }) => <CardView item={item}
+          handleOnProjectClick={props.handleOnProjectClick}
+          />}
           keyExtractor={(item, index) => index.toString()}
         />
       </View>

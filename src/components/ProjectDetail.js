@@ -5,18 +5,18 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
 import { backgroundColor, borderColor, btnBgColor, lightBlue, lightRed, white } from '../helpers/colors';
-import TaskForm from './Form/TaskForm';
+import ProjectForm from './Form/ProjectForm';
 
-const TaskDetail = (props) => {
+const ProjectDetail = (props) => {
 
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = React.useState(false);
 
-  const toggleTaskForm = () => {
+  const toggleProjectForm = () => {
     setModalVisible(!modalVisible);
   };
 
-  const handleTaskDelete = (props) => Alert.alert('Delete Task', 'Are you sure!', [
+  const handleProjectDelete = (props) => Alert.alert('Delete Project', 'Are you sure!', [
     {
       text: 'Cancel',
       onPress: () => console.log('Cancel Pressed'),
@@ -27,7 +27,7 @@ const TaskDetail = (props) => {
 
   return (
     <View style={styles.mainContainer}>
-      <TaskForm modalVisible={modalVisible} setModalVisible={setModalVisible} />
+      <ProjectForm modalVisible={modalVisible} setModalVisible={setModalVisible} />
       <View>
         <View>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -70,7 +70,7 @@ const TaskDetail = (props) => {
         <View style={{
           flexDirection: 'row'
         }}>
-          <Pressable onPress={toggleTaskForm}>
+          <Pressable onPress={toggleProjectForm}>
             <Text style={{
               width: 'auto',
               paddingVertical: 10,
@@ -86,7 +86,7 @@ const TaskDetail = (props) => {
               <FeatherIcon size={16} name='edit-2' />
               Edit</Text>
           </Pressable>
-          <Pressable onPress={handleTaskDelete}>
+          <Pressable onPress={handleProjectDelete}>
             <Text style={{
               width: 'auto',
               color: white,
@@ -202,4 +202,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default TaskDetail;
+export default ProjectDetail;

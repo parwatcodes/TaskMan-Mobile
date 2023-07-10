@@ -4,19 +4,19 @@ import { useNavigation } from '@react-navigation/native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
+import UserForm from './Form/UserForm';
 import { backgroundColor, borderColor, btnBgColor, lightBlue, lightRed, white } from '../helpers/colors';
-import TaskForm from './Form/TaskForm';
 
-const TaskDetail = (props) => {
+const UserDetail = (props) => {
 
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = React.useState(false);
 
-  const toggleTaskForm = () => {
+  const toggleUserForm = () => {
     setModalVisible(!modalVisible);
   };
 
-  const handleTaskDelete = (props) => Alert.alert('Delete Task', 'Are you sure!', [
+  const handleUserDelete = (props) => Alert.alert('Delete User', 'Are you sure!', [
     {
       text: 'Cancel',
       onPress: () => console.log('Cancel Pressed'),
@@ -27,7 +27,7 @@ const TaskDetail = (props) => {
 
   return (
     <View style={styles.mainContainer}>
-      <TaskForm modalVisible={modalVisible} setModalVisible={setModalVisible} />
+      <UserForm modalVisible={modalVisible} setModalVisible={setModalVisible} />
       <View>
         <View>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -70,7 +70,7 @@ const TaskDetail = (props) => {
         <View style={{
           flexDirection: 'row'
         }}>
-          <Pressable onPress={toggleTaskForm}>
+          <Pressable onPress={toggleUserForm}>
             <Text style={{
               width: 'auto',
               paddingVertical: 10,
@@ -86,7 +86,7 @@ const TaskDetail = (props) => {
               <FeatherIcon size={16} name='edit-2' />
               Edit</Text>
           </Pressable>
-          <Pressable onPress={handleTaskDelete}>
+          <Pressable onPress={handleUserDelete}>
             <Text style={{
               width: 'auto',
               color: white,
@@ -102,7 +102,6 @@ const TaskDetail = (props) => {
               backgroundColor: lightRed
             }}>
               <FeatherIcon size={16} name='trash-2' />
-
               Delete</Text>
           </Pressable>
         </View>
@@ -202,4 +201,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default TaskDetail;
+export default UserDetail;

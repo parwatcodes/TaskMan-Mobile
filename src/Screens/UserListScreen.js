@@ -3,7 +3,7 @@ import React from 'react';
 import { getUsers } from '../api/user';
 import UserList from '../components/UserList';
 
-const UserListScreen = () => {
+const UserListScreen = (props) => {
   // const data = [
   //     name: 'Olivia Lee',
   //     email: 'olivialee@example.com',
@@ -21,8 +21,15 @@ const UserListScreen = () => {
       .then(setUsers);
   });
 
+  const handleOnUserClick = () => {
+    props.navigation.navigate('User Details');
+  };
+
   return (
-    <UserList data={users} />
+    <UserList
+      data={users}
+      handleOnUserClick={handleOnUserClick}
+    />
   );
 };
 

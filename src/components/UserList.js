@@ -7,8 +7,8 @@ import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
 import UserForm from './Form/UserForm';
 import { borderColor, btnBgColor, darkBlue, lightBlue, white } from '../helpers/colors';
 
-const CardView = ({ user }) => (
-  <View style={styles.card}>
+const CardView = ({ user, handleOnUserClick }) => (
+  <Pressable style={styles.card} onPress={handleOnUserClick}>
     <Text style={styles.name}>{user.name}</Text>
     <Text style={styles.description}>{user.email}</Text>
     <Text style={styles.description}>Role: {user.role}</Text>
@@ -32,7 +32,7 @@ const CardView = ({ user }) => (
         }}>{user.totalTask || 0} task assigned.</Text>
       </View>
     </View>
-  </View>
+  </Pressable>
 );
 
 const TaskList = (props) => {
@@ -49,7 +49,7 @@ const TaskList = (props) => {
       <View style={styles.column}>
         <FlatList
           data={data}
-          renderItem={({ item }) => <CardView user={item} />}
+          renderItem={({ item }) => <CardView user={item} handleOnUserClick={props.handleOnUserClick}/>}
           keyExtractor={(item, index) => index.toString()}
         />
       </View>

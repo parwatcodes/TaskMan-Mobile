@@ -1,17 +1,16 @@
 import React from 'react';
+import EnTypoIcon from 'react-native-vector-icons/Entypo';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import EnTypoIcon from 'react-native-vector-icons/Entypo';
-
 import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
 
 import TaskForm from './Form/TaskForm';
 import { priorityToLabelColor, statusToCardColor, TASK_STATUS } from '../helpers/mappings';
 import { borderColor, btnBgColor, darkBlue, lightBlue, white } from '../helpers/colors';
 
-const CardView = ({ task }) => (
-  <View style={styles.card}>
+const CardView = ({ task, handleOnTaskClick }) => (
+  <Pressable style={styles.card} onPress={handleOnTaskClick}>
     <Text style={styles.name}>{task.name}</Text>
     <Text style={styles.description}>{task.description}</Text>
     <View style={{ borderBottomColor: borderColor, borderBottomWidth: 0.3, marginTop: 10 }} />
@@ -48,12 +47,12 @@ const CardView = ({ task }) => (
         backgroundColor: statusToCardColor[task.status],
       }}>{TASK_STATUS[task.status]}</Text>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 10 }}>
-      <FontAwesomeIcon style={{marginRight: 10}} size={20} color={priorityToLabelColor[task.priority]} name="tag" />
+        <FontAwesomeIcon style={{ marginRight: 10 }} size={20} color={priorityToLabelColor[task.priority]} name="tag" />
         <MCIcon size={20} name="clock" />
         <Text style={{ fontWeight: 500, marginLeft: 2 }}>{task.startDate}</Text>
       </View>
     </View>
-  </View>
+  </Pressable>
 );
 
 const TaskList = (props) => {
@@ -70,7 +69,10 @@ const TaskList = (props) => {
       <View style={styles.column}>
         <FlatList
           data={data}
-          renderItem={({ item }) => <CardView task={item} />}
+          renderItem={({ item }) => <CardView
+            task={item}
+            handleOnTaskClick={props.handleOnTaskClick}
+          />}
           keyExtractor={(item, index) => index.toString()}
         />
       </View>

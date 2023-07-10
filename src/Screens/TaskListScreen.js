@@ -3,16 +3,23 @@ import React from 'react';
 import { getTasks } from '../api/task';
 import TaskList from '../components/TaskList';
 
-const TaskListScreen = () => {
+const TaskListScreen = (props) => {
   const [tasks, setTasks] = React.useState([]);
 
   React.useEffect(() => {
     getTasks()
       .then(setTasks);
-  },[]);
+  }, []);
+
+  const handleOnTaskClick = () => {
+    props.navigation.navigate('Task Details');
+  };
 
   return (
-    <TaskList data={tasks} />
+    <TaskList
+      data={tasks}
+      handleOnTaskClick={handleOnTaskClick}
+    />
   );
 };
 

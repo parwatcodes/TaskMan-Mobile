@@ -2,6 +2,9 @@ export const white = '#FFFF';
 export const borderColor = '#CECACA';
 export const backgroundColor = '#EDEFF3';
 
+// lighter colors
+export const lighterPink = '#ffb6c1';
+
 // Light colors
 export const lightBlue = '#2c79ad';
 export const lightOrange = '#ffd24e';
