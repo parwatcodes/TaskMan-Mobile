@@ -7,9 +7,8 @@ import EnTypoIcon from 'react-native-vector-icons/Entypo';
 import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
 
 import TaskForm from './Form/TaskForm';
-import { TASK_STATUS } from '../constants';
-import { priorityToLabelColor, statusToCardColor } from '../helpers/mappings';
-import { borderColor, btnBgColor, darkBlue, lightBlue, white } from '../constants/colors';
+import { priorityToLabelColor, statusToCardColor, TASK_STATUS } from '../helpers/mappings';
+import { borderColor, btnBgColor, darkBlue, lightBlue, white } from '../helpers/colors';
 
 const CardView = ({ task }) => (
   <View style={styles.card}>

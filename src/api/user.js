@@ -1,11 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { APP_DATA } from "../constants";
-import { ADMIN, MEMBER } from "../constants/data";
+import { ADMIN, MEMBER } from "../helpers/constant";
 import { stringifyIt } from "../helpers/utils";
 import { getAppData } from "./app";
 
 export async function getUsers() {
-  let users = await getAppData()?.users;
+  let { users } = await getAppData();
 
   return users;
 }

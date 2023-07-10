@@ -2,9 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
 
 import ProjectForm from './Form/ProjectForm';
-import { PROJECT_STATUS } from '../constants/index';
-import { projectStatusColor } from '../helpers/mappings';
-import { backgroundColor, btnBgColor, lightBlue, white } from '../constants/colors';
+import { projectStatusColor, PROJECT_STATUS } from '../helpers/mappings';
+import { backgroundColor, btnBgColor, lightBlue, white } from '../helpers/colors';
 
 const CardView = ({ item }) => (
   <View style={styles.card}>

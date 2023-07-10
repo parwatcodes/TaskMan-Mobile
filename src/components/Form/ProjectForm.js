@@ -4,8 +4,8 @@ import { SelectList } from 'react-native-dropdown-select-list';
 import { View, Text, StyleSheet, Pressable, TextInput, Modal, TouchableOpacity, Button } from 'react-native';
 
 import { transformObject } from '../../helpers/utils';
-import { borderColor, darkBlue, lightBlue, white } from '../../constants/colors';
-import { TASK_PRIORITY_LABEL, PROJECT_STATUS } from '../../constants';
+import { borderColor, darkBlue, lightBlue, white } from '../../helpers/colors';
+import { TASK_PRIORITY_LABEL, PROJECT_STATUS } from '../../helpers/mappings';
 
 const ProjectForm = (props) => {
   const { modalVisible, setModalVisible } = props;

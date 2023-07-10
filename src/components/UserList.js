@@ -5,7 +5,7 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
 
 import UserForm from './Form/UserForm';
-import { borderColor, btnBgColor, darkBlue, lightBlue, white } from '../constants/colors';
+import { borderColor, btnBgColor, darkBlue, lightBlue, white } from '../helpers/colors';
 
 const CardView = ({ user }) => (
   <View style={styles.card}>
@@ -20,7 +20,7 @@ const CardView = ({ user }) => (
           fontWeight: 600,
           fontSize: 14,
           marginLeft: 5
-        }}>{user.totalProjects} project involved in.</Text>
+        }}>{user.totalProjects || 0} project involved in.</Text>
       </View>
 
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -29,7 +29,7 @@ const CardView = ({ user }) => (
           fontWeight: 500,
           fontSize: 14,
           marginLeft: 5
-        }}>{user.totalTask} task assigned.</Text>
+        }}>{user.totalTask || 0} task assigned.</Text>
       </View>
     </View>
   </View>

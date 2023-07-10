@@ -4,8 +4,8 @@ import { SelectList } from 'react-native-dropdown-select-list';
 import { View, Text, StyleSheet, Pressable, TextInput, Modal, TouchableOpacity, Button } from 'react-native';
 
 import { transformObject } from '../../helpers/utils';
-import { borderColor, darkBlue, lightBlue, white } from '../../constants/colors';
-import { USER_ROLE } from '../../constants';
+import { borderColor, darkBlue, lightBlue, white } from '../../helpers/colors';
+import { USER_ROLE } from '../../helpers/mappings';
 
 const UserForm = (props) => {
   const { modalVisible, setModalVisible } = props;

@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Image, Pressable, ImageBackground } from 'react-native';
+import React from 'react';
+import { View, Text, TextInput, StyleSheet, Image, Pressable, ImageBackground } from 'react-native';
 
-import { LOGO_URL } from '../constants';
-import { borderColor, backgroundColor, white, lightBlue } from '../constants/colors';
+import { LOGO_URL } from '../helpers/constant';
+import { borderColor, backgroundColor, white } from '../helpers/colors';
 
 const Login = (props) => {
-  const { email, password, handleLogin } = props;
 
   return (
     <View style={styles.container}>
@@ -28,22 +27,19 @@ const Login = (props) => {
             <Text style={styles.label}>Email</Text>
             <TextInput
               style={styles.input}
-              value={email}
-            // onChangeText={text => setEmail(text)}
+              value={props.email}
+              onChangeText={props.setEmail}
             />
             <Text style={styles.label}>Password</Text>
             <TextInput
               style={styles.input}
               secureTextEntry
-              value={password}
-            // onChangeText={text => setPassword(text)}
+              value={props.password}
+              onChangeText={props.setPassword}
             />
-            <Pressable onPress={() => {
-              console.log('cc');
-              handleLogin();
-            }}>
+            <Pressable onPress={props.handleLogin}>
               <Text style={styles.button} >Login</Text>
-            </Pressable >
+            </Pressable>
           </View>
         </View>
       </ImageBackground>
@@ -88,8 +84,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   text: {
-    fontSize: 24,
-    fontWeight: 500
+    fontSize: 24
   },
   button: {
     backgroundColor: 'green',

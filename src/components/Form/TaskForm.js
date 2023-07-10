@@ -4,8 +4,8 @@ import { View, Text, StyleSheet, Pressable, TextInput, Modal, TouchableOpacity, 
 import DateTimePicker from '@react-native-community/datetimepicker';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
-import { borderColor, darkBlue, lightBlue, white } from '../../constants/colors';
-import { TASK_PRIORITY_LABEL, TASK_STATUS } from '../../constants';
+import { borderColor, darkBlue, lightBlue, white } from '../../helpers/colors';
+import { TASK_PRIORITY_LABEL, TASK_STATUS } from '../../helpers/mappings';
 import { transformObject } from '../../helpers/utils';
 
 const TaskForm = (props) => {

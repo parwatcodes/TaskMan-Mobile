@@ -10,7 +10,7 @@ import OverviewScreen from './OverviewScreen';
 import UserListScreen from './UserListScreen';
 import ProjectListScreen from './ProjectListScreen';
 import ProfileScreen from './ProfileScreen';
-import { darkBlue, white } from '../constants/colors';
+import { darkBlue, white } from '../helpers/colors';
 
 const Tab = createBottomTabNavigator();
 

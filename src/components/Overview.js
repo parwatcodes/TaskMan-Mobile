@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 
 import { statusToCardColor } from '../helpers/mappings';
-import { goldTips, portage, white } from '../constants/colors';
+import { goldTips, portage, white } from '../helpers/colors';
 
 const renderItem = ({ item }) => (
   <View style={styles.itemContainer}>
