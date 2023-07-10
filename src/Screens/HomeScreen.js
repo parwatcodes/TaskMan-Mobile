@@ -4,6 +4,7 @@ import FoundationIcon from 'react-native-vector-icons/Foundation';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { View, Text, TextInput, StyleSheet, Image, Pressable, ImageBackground } from 'react-native';
 
 import TaskListScreen from './TaskListScreen';
 import OverviewScreen from './OverviewScreen';
@@ -11,6 +12,7 @@ import UserListScreen from './UserListScreen';
 import ProjectListScreen from './ProjectListScreen';
 import ProfileScreen from './ProfileScreen';
 import { darkBlue, white } from '../helpers/colors';
+import { LOGO_URL } from '../helpers/constant';
 
 const Tab = createBottomTabNavigator();
 
@@ -18,9 +20,8 @@ const HomeScreen = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: 'green',
+        tabBarActiveTintColor: darkBlue,
         headerTitleAlign: 'left',
-        tabBarInactiveTintColor: darkBlue,
         headerTintColor: darkBlue,
         showIcon: true,
         showLabel: false,
@@ -46,7 +47,26 @@ const HomeScreen = () => {
         }
       }}
     >
-      <Tab.Screen name="Overview" component={OverviewScreen} options={{
+      <Tab.Screen name="Home" component={OverviewScreen} options={{
+        headerTitleStyle: {
+          marginLeft: -5,
+          fontWeight: 700,
+          fontSize: 20,
+        },
+        headerTitle: 'Task Man',
+        headerLeft: () => (
+          <Image
+            style={{
+              height: 40,
+              width: 40,
+              resizeMode: "contain",
+              marginLeft: 15
+            }}
+            source={{
+              uri: LOGO_URL
+            }}
+          />
+        ),
         tabBarIcon: ({ color, size }) => (
           <FoundationIcon size={size} color={color} name="home" />
         )
