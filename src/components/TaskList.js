@@ -18,12 +18,12 @@ const CardView = ({ task }) => (
     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 5 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
 
-        <EnTypoIcon size={14} name="flow-tree" />
+        <EnTypoIcon size={14} color={darkBlue} name="flow-tree" />
         <Text style={{
           fontWeight: 600,
           fontSize: 14,
           marginLeft: 5
-        }}>{'Project ABC'}</Text>
+        }}>{task?.project?.name}</Text>
       </View>
 
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>

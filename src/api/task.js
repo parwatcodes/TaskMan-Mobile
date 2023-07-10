@@ -3,8 +3,7 @@ import { getAppData } from "./app";
 import { getProjectById } from './project';
 export async function getTasks() {
   let { tasks } = await getAppData();
-
-  let allTask = tasks.map(taskWithProject);
+  let allTask = await Promise.all(tasks.map(taskWithProject));
 
   return allTask;
 }
