@@ -179,25 +179,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     fontSize: 12,
     overflow: 'hidden'
-  },
-  btnWrapper: {
-    position: 'absolute',
-    backgroundColor: btnBgColor,
-    bottom: 0,
-    paddingLeft: 40,
-    paddingRight: 40,
-    paddingTop: 15,
-    paddingBottom: 15,
-    zIndex: 1111,
-    marginBottom: 10,
-    borderRadius: 50,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 5
-  },
-  createBtn: {
-    color: white,
-    fontSize: 16,
-    fontWeight: 700,
   }
 });
 

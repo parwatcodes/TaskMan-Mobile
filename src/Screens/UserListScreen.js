@@ -19,7 +19,7 @@ const UserListScreen = (props) => {
   React.useEffect(() => {
     getUsers()
       .then(setUsers);
-  });
+  },[]);
 
   const handleOnUserClick = () => {
     props.navigation.navigate('User Details');

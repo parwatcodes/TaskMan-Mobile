@@ -1,4 +1,5 @@
 import React from 'react';
+import { View, Text, TextInput, StyleSheet, Image, Pressable, ImageBackground } from 'react-native';
 
 import { getTasks } from '../api/task';
 import TaskList from '../components/TaskList';
