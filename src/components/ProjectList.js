@@ -1,31 +1,60 @@
 import React from 'react';
 import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
+import ProgressCircle from 'react-native-progress-circle';
 
 import ProjectForm from './Form/ProjectForm';
 import { projectStatusColor, PROJECT_STATUS } from '../helpers/mappings';
-import { backgroundColor, btnBgColor, lightBlue, white } from '../helpers/colors';
+import { backgroundColor, btnBgColor, darkGreen, lightBlue, lightGreen, white } from '../helpers/colors';
 
 const CardView = ({ item, handleOnProjectClick }) => (
   <Pressable style={styles.card} onPress={handleOnProjectClick}>
-    <Text style={styles.name}>{item.name}</Text>
     <View>
-      <Text>Members: </Text>
-      <View style={{ flexDirection: 'row', marginTop: 5 }}>
-        <Text style={styles.circle}>PK</Text>
-        <Text style={styles.circle}>JK</Text>
-        <Text style={styles.circle}>AP</Text>
+      <View>
+        <View style={{
+          flexDirection: 'row',
+          alignItems: 'baseline'
+        }}>
+          <Text style={styles.name}>{item.name}</Text>
+          <Text style={{
+            ...styles.projectStatus,
+            backgroundColor: projectStatusColor[item.status || 'on-going']
+          }}>{PROJECT_STATUS[item.status || 'on-going']}</Text>
+        </View>
+        <View style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        }}>
+          <View>
+            <Text>Members: </Text>
+            <View style={{ flexDirection: 'row', marginTop: 5 }}>
+              <Text style={styles.circle}>PK</Text>
+              <Text style={styles.circle}>JK</Text>
+              <Text style={styles.circle}>AP</Text>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View style={{
+        position: 'absolute',
+        right: 10,
+        top: 1
+      }}>
+        <ProgressCircle
+          percent={30}
+          radius={35}
+          borderWidth={10}
+          color={darkGreen}
+          shadowColor="#999"
+          bgColor="#fff"
+        >
+          <Text style={{ fontSize: 14, fontWeight: 500 }}>{'30%'}</Text>
+        </ProgressCircle>
       </View>
     </View>
     <View style={{ flexDirection: 'row', marginTop: 5, justifyContent: 'space-between' }}>
       <View>
         <View style={styles.container2}>
         </View>
-      </View>
-      <View>
-        <Text style={{
-          ...styles.projectStatus,
-          backgroundColor: projectStatusColor[item.status]
-        }}>{PROJECT_STATUS[item.status]}</Text>
       </View>
     </View>
   </Pressable>
@@ -49,7 +78,7 @@ const ProjectList = (props) => {
         <FlatList
           data={data}
           renderItem={({ item }) => <CardView item={item}
-          handleOnProjectClick={props.handleOnProjectClick}
+            handleOnProjectClick={props.handleOnProjectClick}
           />}
           keyExtractor={(item, index) => index.toString()}
         />
@@ -90,6 +119,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 5,
+    marginRight: 5
   },
   description: {
     fontSize: 14,
