@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList, ImageBackground } from 'react-native'
 
 import { statusToCardColor, TASK_STATUS } from '../helpers/mappings';
 import { goldTips, portage, white } from '../helpers/colors';
-import { LOGO_URL } from '../helpers/constant';
+import { LOGO_URL, SCREEN_1 } from '../helpers/constant';
 
 const renderItem = ({ item }) => (
   <View style={styles.itemContainer}>
@@ -41,7 +41,7 @@ const Overview = (props) => {
   return (
     <View style={styles.main}>
         <ImageBackground source={{
-          uri: LOGO_URL
+          uri: SCREEN_1
         }} style={{
           flex: 1
         }}>

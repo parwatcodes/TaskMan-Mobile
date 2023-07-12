@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Pressable, ImageBackground } from 'react-native';
 import ProgressCircle from 'react-native-progress-circle';
 
 import ProjectForm from './Form/ProjectForm';
 import { projectStatusColor, PROJECT_STATUS } from '../helpers/mappings';
 import { backgroundColor, btnBgColor, darkGreen, lightBlue, lightGreen, white } from '../helpers/colors';
+import { SCREEN_2 } from '../helpers/constant';
 
 const CardView = ({ item, handleOnProjectClick }) => (
   <Pressable style={styles.card} onPress={handleOnProjectClick}>
@@ -70,19 +71,25 @@ const ProjectList = (props) => {
 
   return (
     <View style={styles.container}>
-      <ProjectForm modalVisible={modalVisible} setModalVisible={setModalVisible} />
-      <Pressable style={styles.btnWrapper} onPress={toggleProjectForm}>
-        <Text style={styles.createBtn}>Create Project</Text>
-      </Pressable>
-      <View style={styles.column}>
-        <FlatList
-          data={data}
-          renderItem={({ item }) => <CardView item={item}
-            handleOnProjectClick={props.handleOnProjectClick}
-          />}
-          keyExtractor={(item, index) => index.toString()}
-        />
-      </View>
+      <ImageBackground source={{
+        uri: SCREEN_2
+      }} style={{
+        flex: 1
+      }}>
+        <ProjectForm modalVisible={modalVisible} setModalVisible={setModalVisible} />
+          <Pressable style={styles.btnWrapper} onPress={toggleProjectForm}>
+            <Text style={styles.createBtn}>Create Project</Text>
+          </Pressable>
+          <View style={styles.column}>
+            <FlatList
+              data={data}
+              renderItem={({ item }) => <CardView item={item}
+                handleOnProjectClick={props.handleOnProjectClick}
+              />}
+              keyExtractor={(item, index) => index.toString()}
+            />
+          </View>
+      </ImageBackground>
     </View>
   );
 };
@@ -90,9 +97,8 @@ const ProjectList = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    paddingHorizontal: 10
+    height: '100%',
+    width: '100%'
   },
   container2: {
     flex: 1,
@@ -101,7 +107,7 @@ const styles = StyleSheet.create({
   },
   column: {
     flex: 1,
-    paddingHorizontal: 10,
+    margin: 10,
   },
   card: {
     backgroundColor: 'white',
@@ -160,7 +166,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 50,
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 5
+    shadowOpacity: 5,
+    alignSelf: 'center',
   },
   createBtn: {
     color: white,
