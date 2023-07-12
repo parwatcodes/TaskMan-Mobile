@@ -1,23 +1,38 @@
-import React, { useState } from 'react';
+import React from 'react';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import { SelectList } from 'react-native-dropdown-select-list';
-import { View, Text, StyleSheet, Pressable, TextInput, Modal, TouchableOpacity, Button } from 'react-native';
+import { View, Text, StyleSheet, Pressable, TextInput, Modal, TouchableOpacity } from 'react-native';
 
 import { transformObject } from '../../helpers/utils';
+import { PROJECT_STATUS } from '../../helpers/mappings';
 import { borderColor, darkBlue, lightBlue, white } from '../../helpers/colors';
-import { TASK_PRIORITY_LABEL, PROJECT_STATUS } from '../../helpers/mappings';
 
 const ProjectForm = (props) => {
   const { modalVisible, setModalVisible } = props;
-  const [selected, setSelected] = React.useState("");
+  const [selectedProject, setSelectedProject] = React.useState({
+    name: '',
+    description: '',
+    status: '',
+    members: []
+  });
+
+  React.useEffect(() => {
+    if (props.project) {
+      setSelectedProject(props.project);
+    }
+  }, [props.project]);
 
   let projectStatus = transformObject(PROJECT_STATUS);
-  let taskPriority = transformObject(TASK_PRIORITY_LABEL);
-  const [date, setDate] = useState(new Date());
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setDate(currentDate);
+  const handleChangeText = (key, val) => {
+    setSelectedProject({
+      ...selectedProject,
+      [key]: val
+    });
+  };
+
+  const handleSubmit = () => {
+    props.onSave(selectedProject);
   };
 
   return (
@@ -48,13 +63,19 @@ const ProjectForm = (props) => {
                 marginBottom: 15
               }}>
                 <Text style={styles.textLabel}>Name</Text>
-                <TextInput style={styles.textInput} value='' />
+                <TextInput
+                  style={styles.textInput}
+                  value={selectedProject.name}
+                  onChangeText={(value) => handleChangeText('name', value)} />
               </View>
               <View style={{
                 marginBottom: 15
               }}>
                 <Text style={styles.textLabel}>Description</Text>
-                <TextInput style={{ ...styles.textInput, height: 80 }} multiline={true} />
+                <TextInput
+                  multiline={true}
+                  style={{ ...styles.textInput, height: 80 }}
+                  onChangeText={(value) => handleChangeText('name', value)} />
               </View>
               <View style={{
                 marginBottom: 15
@@ -86,7 +107,7 @@ const ProjectForm = (props) => {
                   dropdownTextStyles={styles.dropdownTextStyles}
                 />
               </View>
-              <TouchableOpacity style={styles.doneBtnWrapper}>
+              <TouchableOpacity style={styles.doneBtnWrapper} onPress={handleSubmit}>
                 <Text style={styles.doneText}>Done</Text>
               </TouchableOpacity>
             </View>

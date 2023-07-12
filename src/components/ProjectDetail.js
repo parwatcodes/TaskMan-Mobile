@@ -107,7 +107,6 @@ const ProjectDetail = (props) => {
           </Pressable>
         </View>
       </View>
-
     </View>
   );
 };
