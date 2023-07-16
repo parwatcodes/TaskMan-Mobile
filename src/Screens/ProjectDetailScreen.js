@@ -2,14 +2,14 @@ import React from 'react';
 
 import ProjectDetail from '../components/ProjectDetail';
 
-const ProjectDetailScreen = () => {
+const ProjectDetailScreen = (props) => {
 
   React.useEffect(() => {
 
   })
 
   return (
-    <ProjectDetail />
+    <ProjectDetail {...props} />
   )
 }
 

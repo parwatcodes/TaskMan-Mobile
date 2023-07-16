@@ -9,8 +9,9 @@ const Stack = createNativeStackNavigator();
 const ProjectListScreen = (props) => {
   const [projects, setProjects] = React.useState([]);
 
-  const handleOnProjectClick = () => {
-    props.navigation.navigate('Project Details');
+  const handleOnProjectClick = (project) => {
+    console.log('pp11', project)
+    props.navigation.navigate('Project Details', { project });
   };
 
   React.useEffect(() => {

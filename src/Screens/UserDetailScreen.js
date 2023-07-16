@@ -2,10 +2,10 @@ import React from 'react';
 
 import UserDetail from '../components/UserDetail';
 
-const UserDetailScreen = () => {
+const UserDetailScreen = (props) => {
 
   return (
-    <UserDetail />
+    <UserDetail {...props} />
   )
 
 }

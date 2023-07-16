@@ -9,11 +9,17 @@ import ProjectForm from './Form/ProjectForm';
 
 const ProjectDetail = (props) => {
 
+  const project = props?.route?.params?.project;
+
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = React.useState(false);
 
   const toggleProjectForm = () => {
     setModalVisible(!modalVisible);
+  };
+
+  const handleProjectUpdate = async (project) => {
+
   };
 
   const handleProjectDelete = (props) => Alert.alert('Delete Project', 'Are you sure!', [
@@ -27,22 +33,27 @@ const ProjectDetail = (props) => {
 
   return (
     <View style={styles.mainContainer}>
-      <ProjectForm modalVisible={modalVisible} setModalVisible={setModalVisible} />
+      <ProjectForm
+        onSave={handleProjectUpdate}
+        project={project}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
       <View>
         <View>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Text style={styles.name}>Task Man</Text>
-            <Text style={styles.projectStatus}>On Going</Text>
+            <Text style={styles.name}>{project.name}</Text>
+            <Text style={styles.projectStatus}>{project.status}</Text>
           </View>
-          <Text style={styles.description}>TaskMan is a powerful and intuitive web application built using JavaScript, HTML, and CSS, designed to help you stay organized and productive. With its user-friendly interface and seamless functionality, TaskMan revolutionizes the way you manage your tasks and projects.</Text>
+          <Text style={styles.description}>{project.description}</Text>
         </View>
         <View>
           <View style={styles.memberWrapper}>
             <Text style={styles.headerText}>Members</Text>
             <View>
-              <Text style={styles.member}>Parwat Kunwar</Text>
-              <Text style={styles.member}>Parwat Kunwar</Text>
-              <Text style={styles.member}>Parwat Kunwar</Text>
+              {project.members?.map(member => (
+                <Text style={styles.member}>{member.name}</Text>
+              ))}
             </View>
           </View>
           <View style={styles.taskContainer}>

@@ -17,3 +17,13 @@ export function stringifyIt(data) {
 export function parseIt(data) {
   return JSON.parse(data);
 }
+
+export function generatePassword(email) {
+  let defaultPassword = 'Note@123';
+
+  if (email) {
+    return email.split('@')[0] + '@123';
+  }
+
+  return defaultPassword;
+}

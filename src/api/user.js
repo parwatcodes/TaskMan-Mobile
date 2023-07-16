@@ -1,5 +1,7 @@
+import uuid from 'react-native-uuid';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ADMIN, MEMBER } from "../helpers/constant";
+
+import { ADMIN, MEMBER, APP_DATA } from "../helpers/constant";
 import { stringifyIt } from "../helpers/utils";
 import { getAppData } from "./app";
 
@@ -24,25 +26,25 @@ export async function getAdmins() {
   return admins;
 }
 
-export async function addMember(data) {
+export async function addUser(data) {
   try {
     let appData = await getAppData();
 
-    appData?.users?.push({ ...data, id: uuid() });
+    appData?.users?.push({ ...data, id: uuid.v4() });
     await AsyncStorage.setItem(APP_DATA, stringifyIt(appData));
   } catch (error) {
-
+    console.log('err', error)
   }
 }
 
-export async function getMemberById(id) {
+export async function getUserById(id) {
   let users = await getUsers();
   let user = users.find(user => user.id === id);
 
   return user;
 }
 
-export async function updateMemberById(id, data) {
+export async function updateUserById(id, data) {
   try {
     let appData = await getAppData();
 

@@ -6,8 +6,10 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 
 import UserForm from './Form/UserForm';
 import { backgroundColor, borderColor, btnBgColor, lightBlue, lightRed, white } from '../helpers/colors';
+import { USER_ROLE } from '../helpers/mappings';
 
 const UserDetail = (props) => {
+  const user = props?.route?.params?.user;
 
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = React.useState(false);
@@ -15,6 +17,10 @@ const UserDetail = (props) => {
   const toggleUserForm = () => {
     setModalVisible(!modalVisible);
   };
+
+  const updateUser = async (user) => {
+
+  }
 
   const handleUserDelete = (props) => Alert.alert('Delete User', 'Are you sure!', [
     {
@@ -27,26 +33,43 @@ const UserDetail = (props) => {
 
   return (
     <View style={styles.mainContainer}>
-      <UserForm modalVisible={modalVisible} setModalVisible={setModalVisible} />
+      <UserForm
+        user={user}
+        onSave={updateUser}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
       <View>
         <View>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Text style={styles.name}>Task Man</Text>
-            <Text style={styles.projectStatus}>On Going</Text>
+            <Text style={styles.name}>{user?.fullName || user?.name}</Text>
+            <Text style={styles.projectStatus}>{USER_ROLE[user.role]}</Text>
           </View>
-          <Text style={styles.description}>TaskMan is a powerful and intuitive web application built using JavaScript, HTML, and CSS, designed to help you stay organized and productive. With its user-friendly interface and seamless functionality, TaskMan revolutionizes the way you manage your tasks and projects.</Text>
+          <Text style={styles.description}>{user.email}</Text>
         </View>
         <View>
-          <View style={styles.memberWrapper}>
-            <Text style={styles.headerText}>Members</Text>
-            <View>
-              <Text style={styles.member}>Parwat Kunwar</Text>
-              <Text style={styles.member}>Parwat Kunwar</Text>
-              <Text style={styles.member}>Parwat Kunwar</Text>
-            </View>
-          </View>
           <View style={styles.taskContainer}>
             <Text>Total task: 3</Text>
+            <View style={styles.memberWrapper}>
+              <Text style={styles.headerText}>Projects</Text>
+              <View>
+                {user.projects?.map(project => (
+                  <Text style={styles.member}>{project.name}</Text>
+                ))}
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.taskContainer}>
+            <Text>Total task: 3</Text>
+            <View style={styles.memberWrapper}>
+              <Text style={styles.headerText}>Tasks</Text>
+              <View>
+                {user.tasks?.map(task => (
+                  <Text style={styles.member}>{task.name}</Text>
+                ))}
+              </View>
+            </View>
           </View>
         </View>
       </View>
@@ -170,7 +193,7 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   projectStatus: {
-    backgroundColor: 'blue',
+    backgroundColor: lightBlue,
     color: white,
     height: 20,
     paddingHorizontal: 8,

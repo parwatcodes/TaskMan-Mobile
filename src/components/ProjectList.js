@@ -64,32 +64,21 @@ const CardView = ({ item, handleOnProjectClick }) => (
 const ProjectList = (props) => {
   const { data } = props;
   const [modalVisible, setModalVisible] = React.useState(false);
-  const [editingProject, setEditingProject] = React.useState(null);
 
   const toggleProjectForm = () => {
     setModalVisible(!modalVisible);
   };
 
   const handleAddProject = (project) => {
-
-  };
-
-  const handleEditProject = (project) => {
-
+    console.log('project from list', project)
   };
 
   return (
     <View style={styles.container}>
-      {/* <ImageBackground source={{
-        uri: SCREEN_2
-      }} style={{
-        flex: 1
-      }}> */}
       <ProjectForm
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
-        onSave={editingProject ? handleEditProject : handleAddProject}
-        project={editingProject}
+        onSave={handleAddProject}
       />
       <Pressable style={styles.btnWrapper} onPress={toggleProjectForm}>
         <Text style={styles.createBtn}>Create Project</Text>
@@ -99,14 +88,12 @@ const ProjectList = (props) => {
           data={data}
           renderItem={({ item }) => <CardView item={item}
             handleOnProjectClick={() => {
-              setEditingProject(item);
-              props.handleOnProjectClick();
+              props.handleOnProjectClick(item);
             }}
           />}
           keyExtractor={(item, index) => index.toString()}
         />
       </View>
-      {/* </ImageBackground> */}
     </View>
   );
 };

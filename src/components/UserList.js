@@ -4,14 +4,29 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
 
+import { addUser } from '../api/user';
 import UserForm from './Form/UserForm';
+import { USER_ROLE } from '../helpers/mappings';
 import { borderColor, btnBgColor, darkBlue, lightBlue, white } from '../helpers/colors';
 
 const CardView = ({ user, handleOnUserClick }) => (
   <Pressable style={styles.card} onPress={handleOnUserClick}>
-    <Text style={styles.name}>{user.name}</Text>
+    <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
+
+    <Text style={styles.name}>{user.fullName || user.name}</Text>
+    <Text style={{
+      backgroundColor: lightBlue,
+      color: white,
+      paddingHorizontal: 10,
+      paddingVertical: 1,
+      borderRadius: 5,
+      overflow: 'hidden',
+      fontWeight: 500,
+      marginLeft: 10
+    }}>{USER_ROLE[user.role]}</Text>
+
+    </View>
     <Text style={styles.description}>{user.email}</Text>
-    <Text style={styles.description}>Role: {user.role}</Text>
     <View style={{ borderBottomColor: borderColor, borderBottomWidth: 0.3, marginTop: 10 }} />
     <View style={{ flexDirection: 'column', justifyContent: 'center', marginVertical: 5 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
@@ -35,7 +50,7 @@ const CardView = ({ user, handleOnUserClick }) => (
   </Pressable>
 );
 
-const TaskList = (props) => {
+const UserList = (props) => {
   const { data } = props;
   const [modalVisible, setModalVisible] = React.useState(false);
 
@@ -43,13 +58,23 @@ const TaskList = (props) => {
     setModalVisible(!modalVisible);
   };
 
+  const handleAddUser = async (user) => {
+    await addUser(user);
+  };
+
   return (
     <View style={styles.container}>
-      <UserForm modalVisible={modalVisible} setModalVisible={setModalVisible} />
+      <UserForm
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        onSave={handleAddUser}
+      />
       <View style={styles.column}>
         <FlatList
           data={data}
-          renderItem={({ item }) => <CardView user={item} handleOnUserClick={props.handleOnUserClick}/>}
+          renderItem={({ item }) => <CardView user={item} handleOnUserClick={() => {
+            props.handleOnUserClick(item)
+          }} />}
           keyExtractor={(item, index) => index.toString()}
         />
       </View>
@@ -113,4 +138,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default TaskList;
+export default UserList;
