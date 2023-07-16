@@ -63,15 +63,23 @@ const TaskList = (props) => {
     setModalVisible(!modalVisible);
   };
 
+  const handleAddTask = async (task) => {
+    await addUser(task);
+  };
+
   return (
     <View style={styles.container}>
-      <TaskForm modalVisible={modalVisible} setModalVisible={setModalVisible} />
+      <TaskForm
+        onSave={handleAddTask}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
       <View style={styles.column}>
         <FlatList
           data={data}
           renderItem={({ item }) => <CardView
             task={item}
-            handleOnTaskClick={props.handleOnTaskClick}
+            handleOnTaskClick={() => props.handleOnTaskClick(item)}
           />}
           keyExtractor={(item, index) => index.toString()}
         />

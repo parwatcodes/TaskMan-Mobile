@@ -4,16 +4,22 @@ import { useNavigation } from '@react-navigation/native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
+import { statusToCardColor } from '../helpers/mappings';
 import { backgroundColor, borderColor, btnBgColor, lightBlue, lightRed, white } from '../helpers/colors';
 import TaskForm from './Form/TaskForm';
 
 const TaskDetail = (props) => {
+  const task = props?.route?.params?.task;
 
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = React.useState(false);
 
   const toggleTaskForm = () => {
     setModalVisible(!modalVisible);
+  };
+
+  const handleProjectUpdate = async (project) => {
+
   };
 
   const handleTaskDelete = (props) => Alert.alert('Delete Task', 'Are you sure!', [
@@ -27,26 +33,32 @@ const TaskDetail = (props) => {
 
   return (
     <View style={styles.mainContainer}>
-      <TaskForm modalVisible={modalVisible} setModalVisible={setModalVisible} />
+      <TaskForm
+        onSave={handleProjectUpdate}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        task={task}
+      />
       <View>
         <View>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Text style={styles.name}>Task Man</Text>
-            <Text style={styles.projectStatus}>On Going</Text>
+            <Text style={styles.name}>{task.name}</Text>
           </View>
-          <Text style={styles.description}>TaskMan is a powerful and intuitive web application built using JavaScript, HTML, and CSS, designed to help you stay organized and productive. With its user-friendly interface and seamless functionality, TaskMan revolutionizes the way you manage your tasks and projects.</Text>
+          <Text style={styles.description}>{task.description}</Text>
         </View>
+        <Text style={{ ...styles.projectStatus, backgroundColor: statusToCardColor[task.status || 'todo'] }}>{task.status || 'todo'}</Text>
+
         <View>
           <View style={styles.memberWrapper}>
-            <Text style={styles.headerText}>Members</Text>
+            <Text style={styles.headerText}>Project</Text>
             <View>
-              <Text style={styles.member}>Parwat Kunwar</Text>
-              <Text style={styles.member}>Parwat Kunwar</Text>
-              <Text style={styles.member}>Parwat Kunwar</Text>
+              <Text style={styles.member}>{task.project.name}</Text>
             </View>
           </View>
-          <View style={styles.taskContainer}>
-            <Text>Total task: 3</Text>
+          <Text style={styles.projectStatus}>{task.priority}</Text>
+          <View>
+            <Text style={styles.projectStatus}>{task.startDate}</Text>
+            <Text style={styles.projectStatus}>{task.endDate}</Text>
           </View>
         </View>
       </View>
@@ -179,7 +191,9 @@ const styles = StyleSheet.create({
     fontWeight: 600,
     borderRadius: 5,
     fontSize: 12,
-    overflow: 'hidden'
+    overflow: 'hidden',
+    alignSelf: 'flex-start',
+    marginTop: 10
   }
 });
 

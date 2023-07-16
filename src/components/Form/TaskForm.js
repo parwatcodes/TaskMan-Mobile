@@ -10,16 +10,34 @@ import { transformObject } from '../../helpers/utils';
 
 const TaskForm = (props) => {
   const { modalVisible, setModalVisible } = props;
-  const [selected, setSelected] = React.useState("");
+  const [selectedTask, setSelectedTask] = React.useState({
+    name: '',
+    description: '',
+    project: '',
+    member: '',
+    status: '',
+    priority: '',
+    startDate: '',
+    endDate: ''
+  });
 
   let taskStatus = transformObject(TASK_STATUS);
   let taskPriority = transformObject(TASK_PRIORITY_LABEL);
-  const [date, setDate] = useState(new Date());
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setDate(currentDate);
+  React.useEffect(() => {
+    if (props.task) {
+      setSelectedTask(props.task);
+    }
+  }, [props.task]);
+
+  const handleTextChange = (key, value) => {
+    setSelectedTask({
+      ...selectedTask,
+      [key]: value
+    });
   };
+
+  const modalTitle = props.task ? 'Edit a task' : 'Create a task';
 
   return (
     <View>
@@ -43,26 +61,34 @@ const TaskForm = (props) => {
             }} onPress={() => setModalVisible(!modalVisible)}>
               <IonIcon size={40} color={'grey'} name="ios-close-circle-outline" />
             </Pressable>
-            <Text style={styles.modalText}>Create a Task</Text>
+            <Text style={styles.modalText}>{modalTitle}</Text>
             <View>
               <View style={{
                 marginBottom: 15
               }}>
                 <Text style={styles.textLabel}>Title</Text>
-                <TextInput style={styles.textInput} value='' />
+                <TextInput
+                  style={styles.textInput}
+                  value={selectedTask.name}
+                  onChangeText={(val) => handleTextChange('name', val)}
+                />
               </View>
               <View style={{
                 marginBottom: 15
               }}>
                 <Text style={styles.textLabel}>Description</Text>
-                <TextInput style={{ ...styles.textInput, height: 80 }} multiline={true} />
+                <TextInput
+                  style={{ ...styles.textInput, height: 80 }}
+                  multiline={true}
+                  onChangeText={(val) => handleTextChange('description', val)}
+                />
               </View>
               <View style={{
                 marginBottom: 15
               }}>
                 <Text style={styles.textLabel}>Project</Text>
                 <SelectList
-                  setSelected={(val) => setSelected(val)}
+                  setSelected={(val) => handleTextChange('project', val)}
                   data={taskPriority}
                   save="value"
                   boxStyles={styles.dropdownStyles}
@@ -76,7 +102,7 @@ const TaskForm = (props) => {
               }}>
                 <Text style={styles.textLabel}>Member</Text>
                 <SelectList
-                  setSelected={(val) => setSelected(val)}
+                  setSelected={(val) => handleTextChange('member', val)}
                   data={taskPriority}
                   save="value"
                   boxStyles={styles.dropdownStyles}
@@ -96,7 +122,7 @@ const TaskForm = (props) => {
                 }}>
                   <Text style={styles.textLabel}>Status</Text>
                   <SelectList
-                    setSelected={(val) => setSelected(val)}
+                    setSelected={(val) => handleTextChange('status', val)}
                     data={taskStatus}
                     save="value"
                     search={false}
@@ -111,7 +137,7 @@ const TaskForm = (props) => {
                 }}>
                   <Text style={styles.textLabel}>Priority</Text>
                   <SelectList
-                    setSelected={(val) => setSelected(val)}
+                    setSelected={(val) => handleTextChange('priority', val)}
                     data={taskPriority}
                     save="value"
                     search={false}
@@ -121,8 +147,6 @@ const TaskForm = (props) => {
                     dropdownTextStyles={styles.dropdownTextStyles}
                   />
                 </View>
-
-
               </View>
               <View style={{
                 marginBottom: 15,
@@ -133,10 +157,10 @@ const TaskForm = (props) => {
                 <Text style={styles.textLabelDate}>Start Date</Text>
                 <DateTimePicker
                   testID="dateTimePicker"
-                  value={date}
+                  value={new Date(setSelectedTask.startDate || new Date())}
                   mode='datetime'
                   is24Hour={true}
-                  onChange={onChange}
+                  onChange={(event, date) => handleTextChange('startDate', date)}
                   style={{
                     alignSelf: 'flex-end'
                   }}
@@ -151,16 +175,16 @@ const TaskForm = (props) => {
                 <Text style={styles.textLabelDate}>End Date</Text>
                 <DateTimePicker
                   testID="dateTimePicker"
-                  value={date}
+                  value={new Date(selectedTask.endDate || new Date)}
                   mode='datetime'
                   is24Hour={true}
-                  onChange={onChange}
+                  onChange={(event, date) => handleTextChange('endDate', date)}
                   style={{
                     alignSelf: 'flex-end'
                   }}
                 />
               </View>
-              <TouchableOpacity style={styles.doneBtnWrapper}>
+              <TouchableOpacity style={styles.doneBtnWrapper} onPress={() => props.onSave(selectedTask)} >
                 <Text style={styles.doneText}>Done</Text>
               </TouchableOpacity>
             </View>
@@ -228,7 +252,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     height: 30,
-    borderColor
+    borderColor,
+    paddingHorizontal: 5
   },
   doneBtnWrapper: {
     backgroundColor: darkBlue,

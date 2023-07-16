@@ -2,10 +2,10 @@ import React from 'react';
 
 import TaskDetail from '../components/TaskDetail';
 
-const TaskDetailScreen = () => {
+const TaskDetailScreen = (props) => {
 
   return (
-    <TaskDetail />
+    <TaskDetail {...props} />
   )
 
 }

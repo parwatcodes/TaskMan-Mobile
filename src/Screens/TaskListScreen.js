@@ -12,8 +12,8 @@ const TaskListScreen = (props) => {
       .then(setTasks);
   }, []);
 
-  const handleOnTaskClick = () => {
-    props.navigation.navigate('Task Details');
+  const handleOnTaskClick = (task) => {
+    props.navigation.navigate('Task Details', { task });
   };
 
   return (
