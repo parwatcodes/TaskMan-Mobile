@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
 
 import Login from '../components/Login';
 import { seedData } from '../seed';
@@ -8,6 +9,8 @@ import { login } from '../api/login';
 const LoginScreen = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [error, setError] = React.useState('');
+
   const navigation = useNavigation();
 
   React.useEffect(() => {
@@ -23,9 +26,18 @@ const LoginScreen = () => {
   const handleLogin = async () => {
     console.log('Logging in...');
 
-    const response = await login({ email, password })
+    const response = await login({ email, password });
 
-    console.log('response', response)
+    if (response.success) {
+
+    } else {
+      Toast.show({
+        type: 'error',
+        text1: response.message
+      });
+    }
+
+    console.log('response', response);
     // navigation.navigate('Dashboard');
   };
 
@@ -38,7 +50,13 @@ const LoginScreen = () => {
   };
 
   return (
-    <Login {...data} />
+    <>
+      <Login {...data} />
+      <Toast
+        position='top'
+        bottomOffset={20}
+      />
+    </>
   );
 };
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { View, Text, StyleSheet, Pressable, TextInput, Modal, TouchableOpacity, Button } from 'react-native';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 import { generatePassword, transformObject } from '../../helpers/utils';
 import { borderColor, darkBlue, lightBlue, white } from '../../helpers/colors';
@@ -11,7 +12,7 @@ const UserForm = (props) => {
   const { modalVisible, setModalVisible } = props;
   let userRole = transformObject(USER_ROLE);
 
-  const [defaultOptionRole, setDefaultOptionRole] = React.useState(userRole[0])
+  const [defaultOptionRole, setDefaultOptionRole] = React.useState(userRole[0]);
   const [selectedUser, setSelectedUser] = React.useState({
     fullName: '',
     email: '',
@@ -24,15 +25,10 @@ const UserForm = (props) => {
     if (props.user) {
       setSelectedUser(props.user);
 
-      console.log({
-        key: props.role,
-        value: USER_ROLE[props.role]
-      })
-
       setDefaultOptionRole({
         key: props.user.role,
         value: USER_ROLE[props.user.role]
-      })
+      });
     }
   }, [props.user]);
 
@@ -57,8 +53,6 @@ const UserForm = (props) => {
 
   const userModalTitle = props.user ? 'Edit a user' : 'Create a user';
   const disabledBtnBgColor = !(selectedUser.fullName && selectedUser.email) ? 'grey' : darkBlue;
-
-console.log('cccccc', defaultOptionRole)
 
   return (
     <View>
@@ -138,6 +132,9 @@ console.log('cccccc', defaultOptionRole)
                 <Text style={styles.doneText}>Done</Text>
               </TouchableOpacity>
             </View>
+            <Toast
+              position='top'
+            />
           </View>
         </View>
       </Modal>

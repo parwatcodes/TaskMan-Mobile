@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Pressable, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import { MultipleSelectList } from 'react-native-dropdown-select-list';
 
 import { statusToCardColor } from '../helpers/mappings';
 import { backgroundColor, borderColor, btnBgColor, lightBlue, lightRed, white } from '../helpers/colors';
@@ -18,7 +19,7 @@ const TaskDetail = (props) => {
     setModalVisible(!modalVisible);
   };
 
-  const handleProjectUpdate = async (project) => {
+  const handleTaskUpdate = async (project) => {
 
   };
 
@@ -34,7 +35,7 @@ const TaskDetail = (props) => {
   return (
     <View style={styles.mainContainer}>
       <TaskForm
-        onSave={handleProjectUpdate}
+        onSave={handleTaskUpdate}
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
         task={task}
@@ -55,10 +56,28 @@ const TaskDetail = (props) => {
               <Text style={styles.member}>{task.project.name}</Text>
             </View>
           </View>
-          <Text style={styles.projectStatus}>{task.priority}</Text>
           <View>
-            <Text style={styles.projectStatus}>{task.startDate}</Text>
-            <Text style={styles.projectStatus}>{task.endDate}</Text>
+            <Text style={styles.projectStatus}>{task.priority}</Text>
+            <View>
+              <Text style={styles.projectStatus}>{task.startDate}</Text>
+              <Text style={styles.projectStatus}>{task.endDate}</Text>
+            </View>
+          </View>
+          <View style={{
+            marginBottom: 15
+          }}>
+            <Text style={styles.textLabel}>Members</Text>
+            <MultipleSelectList
+              setSelected={(val) => {
+                handleChangeText('members', val);
+              }}
+              data={projectStatus}
+              save="value"
+              boxStyles={styles.dropdownStyles}
+              dropdownStyles={styles.dropdownStyles}
+              dropdownItemStyles={styles.dropdownItemStyles}
+              dropdownTextStyles={styles.dropdownTextStyles}
+            />
           </View>
         </View>
       </View>
@@ -119,7 +138,6 @@ const TaskDetail = (props) => {
           </Pressable>
         </View>
       </View>
-
     </View>
   );
 };

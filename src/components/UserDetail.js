@@ -1,26 +1,50 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable, Alert } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Alert, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 import UserForm from './Form/UserForm';
 import { backgroundColor, borderColor, btnBgColor, lightBlue, lightRed, white } from '../helpers/colors';
 import { USER_ROLE } from '../helpers/mappings';
+import { updateUserById, getUserById } from '../api/user';
 
 const UserDetail = (props) => {
   const user = props?.route?.params?.user;
 
   const navigation = useNavigation();
+  const [userSelected, setUserSelected] = React.useState({});
   const [modalVisible, setModalVisible] = React.useState(false);
+
+  React.useEffect(() => {
+    async function getUser() {
+      let user1 = await getUserById(user.id)
+      setUserSelected(user1)
+    }
+    getUser();
+
+  }, [user.id, modalVisible])
 
   const toggleUserForm = () => {
     setModalVisible(!modalVisible);
   };
 
   const updateUser = async (user) => {
+    let resp = await updateUserById(user.id, user);
+    let { message, success } = resp;
 
-  }
+    Toast.show({
+      type: success ? 'success' : 'error',
+      text1: message.toString()
+    });
+
+    if (resp.success) {
+      setTimeout(() => {
+        setModalVisible(!modalVisible);
+      }, 1000)
+    }
+  };
 
   const handleUserDelete = (props) => Alert.alert('Delete User', 'Are you sure!', [
     {
@@ -34,7 +58,7 @@ const UserDetail = (props) => {
   return (
     <View style={styles.mainContainer}>
       <UserForm
-        user={user}
+        user={userSelected}
         onSave={updateUser}
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
@@ -42,10 +66,10 @@ const UserDetail = (props) => {
       <View>
         <View>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Text style={styles.name}>{user?.fullName || user?.name}</Text>
-            <Text style={styles.projectStatus}>{USER_ROLE[user.role]}</Text>
+            <Text style={styles.name}>{userSelected?.fullName || userSelected?.name}</Text>
+            <Text style={styles.projectStatus}>{USER_ROLE[userSelected.role]}</Text>
           </View>
-          <Text style={styles.description}>{user.email}</Text>
+          <Text style={styles.description}>{userSelected.email}</Text>
         </View>
         <View>
           <View style={styles.taskContainer}>
@@ -53,7 +77,7 @@ const UserDetail = (props) => {
             <View style={styles.memberWrapper}>
               <Text style={styles.headerText}>Projects</Text>
               <View>
-                {user.projects?.map(project => (
+                {userSelected.projects?.map(project => (
                   <Text style={styles.member}>{project.name}</Text>
                 ))}
               </View>
@@ -65,7 +89,7 @@ const UserDetail = (props) => {
             <View style={styles.memberWrapper}>
               <Text style={styles.headerText}>Tasks</Text>
               <View>
-                {user.tasks?.map(task => (
+                {userSelected.tasks?.map(task => (
                   <Text style={styles.member}>{task.name}</Text>
                 ))}
               </View>
@@ -129,7 +153,6 @@ const UserDetail = (props) => {
           </Pressable>
         </View>
       </View>
-
     </View>
   );
 };

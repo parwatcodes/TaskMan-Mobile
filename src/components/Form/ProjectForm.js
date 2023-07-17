@@ -16,6 +16,26 @@ const ProjectForm = (props) => {
     status: 'not-started',
     members: []
   });
+  const [memberList, setMemberList] = React.useState([]);
+
+  React.useEffect(() => {
+    async function getMemberList() {
+      let members = await getMembers();
+
+      let membersForDropdown = members.map(member => (
+        {
+          value: member.fullName || member.name,
+          key: member.id
+        }
+      ))
+
+      console.log('12321', members, membersForDropdown)
+
+      setMemberList(membersForDropdown);
+    }
+
+    getMemberList();
+  }, [])
 
   React.useEffect(() => {
     if (props.project) {
@@ -77,6 +97,7 @@ const ProjectForm = (props) => {
                 <Text style={styles.textLabel}>Description</Text>
                 <TextInput
                   multiline={true}
+                  value={selectedProject.description}
                   style={{ ...styles.textInput, height: 80 }}
                   onChangeText={(value) => handleChangeText('description', value)} />
               </View>
@@ -86,6 +107,7 @@ const ProjectForm = (props) => {
                 <Text style={styles.textLabel}>Status</Text>
                 <SelectList
                   setSelected={(val) => {
+                    console.log('ddd', val)
                     handleChangeText('status', val)
                   }}
                   data={projectStatus}
@@ -105,8 +127,8 @@ const ProjectForm = (props) => {
                   setSelected={(val) => {
                     handleChangeText('members', val)
                   }}
-                  data={projectStatus}
-                  save="value"
+                  data={memberList}
+                  save="key"
                   boxStyles={styles.dropdownStyles}
                   dropdownStyles={styles.dropdownStyles}
                   dropdownItemStyles={styles.dropdownItemStyles}
@@ -181,7 +203,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     height: 30,
-    borderColor
+    borderColor,
+    paddingHorizontal: 5
   },
   doneBtnWrapper: {
     backgroundColor: darkBlue,

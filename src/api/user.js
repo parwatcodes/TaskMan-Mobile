@@ -53,9 +53,18 @@ export async function updateUserById(id, data) {
 
     appData.users = allUsers;
 
-    await AsyncStorage.setItem(APP_DATA, stringifyIt(app));
-  } catch (error) {
+    await AsyncStorage.setItem(APP_DATA, stringifyIt(appData));
 
+    return {
+      success: true,
+      message: 'User updated'
+    }
+  } catch (error) {
+    console.log('ee', JSON.stringify(error))
+    return {
+      success: false,
+      message: error
+    }
   }
 }
 
