@@ -6,6 +6,7 @@ import ProjectForm from './Form/ProjectForm';
 import { projectStatusColor, PROJECT_STATUS } from '../helpers/mappings';
 import { backgroundColor, btnBgColor, darkGreen, lightBlue, lightGreen, white } from '../helpers/colors';
 import { SCREEN_2 } from '../helpers/constant';
+import { getNameAffr } from '../helpers/utils';
 
 const CardView = ({ item, handleOnProjectClick }) => (
   <Pressable style={styles.card} onPress={handleOnProjectClick}>
@@ -18,8 +19,8 @@ const CardView = ({ item, handleOnProjectClick }) => (
           <Text style={styles.name}>{item.name}</Text>
           <Text style={{
             ...styles.projectStatus,
-            backgroundColor: projectStatusColor[item.status || 'on-going']
-          }}>{PROJECT_STATUS[item.status || 'on-going']}</Text>
+            backgroundColor: projectStatusColor[item.status]
+          }}>{PROJECT_STATUS[item.status]}</Text>
         </View>
         <View style={{
           flexDirection: 'row',
@@ -28,9 +29,9 @@ const CardView = ({ item, handleOnProjectClick }) => (
           <View>
             <Text>Members: </Text>
             <View style={{ flexDirection: 'row', marginTop: 5 }}>
-              <Text style={styles.circle}>PK</Text>
-              <Text style={styles.circle}>JK</Text>
-              <Text style={styles.circle}>AP</Text>
+              {item?.members.map(member =>
+              <Text style={styles.circle}>{getNameAffr(member?.fullName || member?.name)}</Text>
+              )}
             </View>
           </View>
         </View>

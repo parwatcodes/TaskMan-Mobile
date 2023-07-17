@@ -2,10 +2,11 @@ import React from 'react';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import { SelectList, MultipleSelectList } from 'react-native-dropdown-select-list';
 import { View, Text, StyleSheet, Pressable, TextInput, Modal, TouchableOpacity } from 'react-native';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 import { transformObject } from '../../helpers/utils';
 import { PROJECT_STATUS } from '../../helpers/mappings';
-import { getMembers } from '../../api/user'
+import { getMembers } from '../../api/user';
 import { borderColor, darkBlue, lightBlue, white } from '../../helpers/colors';
 
 const ProjectForm = (props) => {
@@ -17,6 +18,10 @@ const ProjectForm = (props) => {
     members: []
   });
   const [memberList, setMemberList] = React.useState([]);
+  const [statusDropdown, setStatusDropdown] = React.useState({
+    key: 'not-started',
+    value: 'Not Started'
+  });
 
   React.useEffect(() => {
     async function getMemberList() {
@@ -27,32 +32,40 @@ const ProjectForm = (props) => {
           value: member.fullName || member.name,
           key: member.id
         }
-      ))
-
-      console.log('12321', members, membersForDropdown)
+      ));
 
       setMemberList(membersForDropdown);
     }
 
     getMemberList();
-  }, [])
+  }, []);
 
   React.useEffect(() => {
     if (props.project) {
       setSelectedProject(props.project);
+    }
+
+    if (props.project?.status) {
+      let initialStatus = {
+        key: props.project.status,
+        value: PROJECT_STATUS[props.project.status]
+      };
+
+      setStatusDropdown(initialStatus);
     }
   }, [props.project]);
 
   let projectStatus = transformObject(PROJECT_STATUS);
 
   const handleChangeText = (key, val) => {
-      setSelectedProject({
-        ...selectedProject,
-        [key]: val
-      });
+    setSelectedProject({
+      ...selectedProject,
+      [key]: val
+    });
   };
 
   const handleSubmit = () => {
+    selectedProject.members = selectedMembers;
     props.onSave(selectedProject);
   };
 
@@ -107,11 +120,11 @@ const ProjectForm = (props) => {
                 <Text style={styles.textLabel}>Status</Text>
                 <SelectList
                   setSelected={(val) => {
-                    console.log('ddd', val)
-                    handleChangeText('status', val)
+                    handleChangeText('status', val);
                   }}
                   data={projectStatus}
-                  save="value"
+                  defaultOption={statusDropdown}
+                  save="key"
                   search={false}
                   boxStyles={styles.dropdownStyles}
                   dropdownStyles={styles.dropdownStyles}
@@ -125,7 +138,7 @@ const ProjectForm = (props) => {
                 <Text style={styles.textLabel}>Members</Text>
                 <MultipleSelectList
                   setSelected={(val) => {
-                    handleChangeText('members', val)
+                    setSelectedMembers(val);
                   }}
                   data={memberList}
                   save="key"
@@ -139,6 +152,9 @@ const ProjectForm = (props) => {
                 <Text style={styles.doneText}>Done</Text>
               </TouchableOpacity>
             </View>
+            <Toast
+              position='top'
+            />
           </View>
         </View>
       </Modal>

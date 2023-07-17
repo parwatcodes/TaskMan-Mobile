@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ImageBackground, Modal, Pressable } from 'react-native';
 
 import { statusToCardColor, TASK_STATUS } from '../helpers/mappings';
 import { goldTips, portage, white } from '../helpers/colors';
@@ -37,15 +37,41 @@ const renderItem = ({ item }) => (
 
 const Overview = (props) => {
   let { data } = props;
+  const [modalVisible, setModalVisible] = React.useState(false);
+
+  const toggleProjectForm = () => {
+    setModalVisible(!modalVisible);
+  };
+
 
   return (
     <View style={styles.main}>
-        <ImageBackground source={{
-          uri: SCREEN_1
-        }} style={{
-          flex: 1
-        }}>
-      <View style={styles.container}>
+      <ImageBackground source={{
+        uri: SCREEN_1
+      }} style={{
+        flex: 1
+      }}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          style={{
+            backgroundColor: 'green'
+          }}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View>
+            <Text>parwatkunwar08@gmail.com</Text>
+            <Pressable>
+              <Text>Logout</Text>
+            </Pressable>
+          </View>
+
+        </Modal>
+        <View style={styles.container}>
           <View>
             <FlatList
               data={data}
@@ -59,9 +85,9 @@ const Overview = (props) => {
               <Text>Report Analysis</Text>
             </View>
           </View>
-      </View >
-        </ImageBackground>
-    </View>
+        </View >
+      </ImageBackground>
+    </View >
   );
 };
 

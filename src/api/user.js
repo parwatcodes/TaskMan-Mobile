@@ -60,10 +60,10 @@ export async function updateUserById(id, data) {
       message: 'User updated'
     }
   } catch (error) {
-    console.log('ee', JSON.stringify(error))
+
     return {
       success: false,
-      message: error
+      message: error.toString()
     }
   }
 }

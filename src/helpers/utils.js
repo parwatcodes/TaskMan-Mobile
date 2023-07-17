@@ -27,3 +27,13 @@ export function generatePassword(email) {
 
   return defaultPassword;
 }
+
+export function getNameAffr(fullName) {
+  let [first, last] = fullName.split(' ');
+
+  let a = first?.[0];
+  let b = last?.[0];
+
+
+  return (a + b).toUpperCase();
+}

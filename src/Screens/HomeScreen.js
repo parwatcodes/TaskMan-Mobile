@@ -55,24 +55,25 @@ const HomeScreen = () => {
         },
         headerTitle: 'Task Man',
         headerRight: () => (
-          // <AntIcon style={{
-          //   marginRight: 15,
-          //   fontWeight: 600
-          // }} size={30} color={darkBlue} name="logout" />
-          // <FontAwesome5Icon style={{
-          //   marginRight: 15
-          // }} size={30} color={darkBlue} name="user-circle" />
-          <Pressable>
+          <Pressable style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: lighterPink,
+            marginBottom: 5,
+            padding: 10,
+            borderRadius: 20,
+            overflow: 'hidden',
+            color: darkBlue,
+            fontSize: 16,
+            marginRight: 15
+          }}>
             <Text style={{
-              backgroundColor: lighterPink,
-              padding: 10,
-              borderRadius: 20,
-              overflow: 'hidden',
-              color: darkBlue,
-              fontWeight: 700,
-              fontSize: 16,
-              marginRight: 15
+            fontWeight: 700
             }}>PK</Text>
+            <AntIcon style={{
+              marginLeft: 5
+            }} size={20} color={darkBlue} name="logout" />
           </Pressable>
         ),
         headerLeft: () => (

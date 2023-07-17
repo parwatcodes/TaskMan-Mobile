@@ -42,7 +42,9 @@ export async function getOverviewData() {
     const appData = await getAppData();
 
     let totalProject = appData?.projects.length;
-    let taskObj = totalTaskByStatus();
+    let taskObj = await totalTaskByStatus();
+
+    console.log('--', totalProject, taskObj)
 
     return {
       taskObj,
@@ -50,6 +52,6 @@ export async function getOverviewData() {
     };
 
   } catch (error) {
-
+    console.log('getOverviewData error', error)
   }
 }

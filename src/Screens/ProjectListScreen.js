@@ -1,16 +1,15 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useIsFocused } from '@react-navigation/native';
 
 import ProjectList from '../components/ProjectList';
 import { getProjects } from '../api/project';
 
-const Stack = createNativeStackNavigator();
-
 const ProjectListScreen = (props) => {
   const [projects, setProjects] = React.useState([]);
+  const isFocused = useIsFocused();
 
   const handleOnProjectClick = (project) => {
-    console.log('pp11', project)
     props.navigation.navigate('Project Details', { project });
   };
 
@@ -18,7 +17,7 @@ const ProjectListScreen = (props) => {
     getProjects()
       .then(setProjects)
       .catch(err => console.log(err));
-  }, []);
+  }, [isFocused]);
 
   return (
     <ProjectList

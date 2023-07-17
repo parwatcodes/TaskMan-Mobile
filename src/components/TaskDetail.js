@@ -3,25 +3,44 @@ import { View, Text, StyleSheet, Pressable, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import { MultipleSelectList } from 'react-native-dropdown-select-list';
+import { SelectList } from 'react-native-dropdown-select-list';
 
 import { statusToCardColor } from '../helpers/mappings';
 import { backgroundColor, borderColor, btnBgColor, lightBlue, lightRed, white } from '../helpers/colors';
 import TaskForm from './Form/TaskForm';
+import { getAllTaskByProjectId } from '../api/task'
 
 const TaskDetail = (props) => {
   const task = props?.route?.params?.task;
 
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = React.useState(false);
+  const [taskForDropdown, setTaskForDropdown] = React.useState([]);
 
   const toggleTaskForm = () => {
     setModalVisible(!modalVisible);
   };
 
-  const handleTaskUpdate = async (project) => {
+  const updateProject = async (project) => {
 
   };
+
+  React.useEffect(() => {
+    async function getTask() {
+      let tasks = await getAllTaskByProjectId(task.project.id);
+
+      let t = tasks.map(task => (
+        {
+          value: task.name,
+          key: task.id
+        }
+      ));
+
+      setTaskForDropdown(t);
+    }
+
+    getTask();
+  }, [task]);
 
   const handleTaskDelete = (props) => Alert.alert('Delete Task', 'Are you sure!', [
     {
@@ -35,7 +54,7 @@ const TaskDetail = (props) => {
   return (
     <View style={styles.mainContainer}>
       <TaskForm
-        onSave={handleTaskUpdate}
+        onSave={updateProject}
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
         task={task}
@@ -63,16 +82,13 @@ const TaskDetail = (props) => {
               <Text style={styles.projectStatus}>{task.endDate}</Text>
             </View>
           </View>
-          <View style={{
-            marginBottom: 15
-          }}>
-            <Text style={styles.textLabel}>Members</Text>
-            <MultipleSelectList
-              setSelected={(val) => {
-                handleChangeText('members', val);
-              }}
-              data={projectStatus}
+          <View>
+            <Text>Add a dependency to task</Text>
+            <SelectList
+              setSelected={(val) => handleTextChange('status', val)}
+              data={taskForDropdown}
               save="value"
+              search={false}
               boxStyles={styles.dropdownStyles}
               dropdownStyles={styles.dropdownStyles}
               dropdownItemStyles={styles.dropdownItemStyles}
@@ -138,6 +154,7 @@ const TaskDetail = (props) => {
           </Pressable>
         </View>
       </View>
+
     </View>
   );
 };

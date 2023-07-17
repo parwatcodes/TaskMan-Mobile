@@ -5,11 +5,21 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
 import { borderColor, darkBlue, lightBlue, white } from '../../helpers/colors';
-import { TASK_PRIORITY_LABEL, TASK_STATUS } from '../../helpers/mappings';
+import { PROJECT_STATUS, TASK_PRIORITY_LABEL, TASK_STATUS } from '../../helpers/mappings';
 import { transformObject } from '../../helpers/utils';
+import { getProjects } from '../../api/project';
+import { getMembers } from '../../api/user';
 
 const TaskForm = (props) => {
   const { modalVisible, setModalVisible } = props;
+  let taskStatus = transformObject(TASK_STATUS);
+  let taskPriority = transformObject(TASK_PRIORITY_LABEL);
+
+  const [defaultTaskStatus, setDefaultTaskStatus] = React.useState(taskStatus[0]);
+  const [defaultPriority, setDefaultPriority] = React.useState(taskPriority[0]);
+  const [projects, setProjects] = React.useState([]);
+  const [members, setMembers] = React.useState([]);
+
   const [selectedTask, setSelectedTask] = React.useState({
     name: '',
     description: '',
@@ -21,13 +31,55 @@ const TaskForm = (props) => {
     endDate: ''
   });
 
-  let taskStatus = transformObject(TASK_STATUS);
-  let taskPriority = transformObject(TASK_PRIORITY_LABEL);
+  React.useEffect(() => {
+    async function getProjectList() {
+      let projects = await getProjects();
+
+      let listForDropdown = projects.map(project => ({
+        key: project.id,
+        value: project.name
+      }));
+
+      setProjects(listForDropdown);
+    }
+
+    getProjectList();
+  }, [])
+
+  React.useEffect(() => {
+    async function getMemberList() {
+      let members = await getMembers();
+
+      let listForDropdown = members.map(member => ({
+        key: member.id,
+        value: member.fullName || member.name
+      }));
+
+      setMembers(listForDropdown)
+    }
+
+    getMemberList();
+  }, [])
 
   React.useEffect(() => {
     if (props.task) {
       setSelectedTask(props.task);
     }
+
+    if (props?.task?.status) {
+      setDefaultTaskStatus({
+        key: props.task.status,
+        value: TASK_STATUS[props.task.status]
+      });
+    }
+
+    if (props?.task?.priority) {
+      setDefaultPriority({
+        key: props.task.priority,
+        value: TASK_PRIORITY_LABEL[props.task.priority]
+      });
+    }
+
   }, [props.task]);
 
   const handleTextChange = (key, value) => {
@@ -80,6 +132,7 @@ const TaskForm = (props) => {
                 <TextInput
                   style={{ ...styles.textInput, height: 80 }}
                   multiline={true}
+                  value={selectedTask.description}
                   onChangeText={(val) => handleTextChange('description', val)}
                 />
               </View>
@@ -89,7 +142,7 @@ const TaskForm = (props) => {
                 <Text style={styles.textLabel}>Project</Text>
                 <SelectList
                   setSelected={(val) => handleTextChange('project', val)}
-                  data={taskPriority}
+                  data={projects}
                   save="value"
                   boxStyles={styles.dropdownStyles}
                   dropdownStyles={styles.dropdownStyles}
@@ -103,7 +156,7 @@ const TaskForm = (props) => {
                 <Text style={styles.textLabel}>Member</Text>
                 <SelectList
                   setSelected={(val) => handleTextChange('member', val)}
-                  data={taskPriority}
+                  data={members}
                   save="value"
                   boxStyles={styles.dropdownStyles}
                   dropdownStyles={styles.dropdownStyles}
@@ -126,6 +179,7 @@ const TaskForm = (props) => {
                     data={taskStatus}
                     save="value"
                     search={false}
+                    defaultOption={defaultTaskStatus}
                     boxStyles={styles.dropdownStyles}
                     dropdownStyles={styles.dropdownStyles}
                     dropdownItemStyles={styles.dropdownItemStyles}
@@ -141,6 +195,7 @@ const TaskForm = (props) => {
                     data={taskPriority}
                     save="value"
                     search={false}
+                    defaultOption={defaultPriority}
                     boxStyles={styles.dropdownStyles}
                     dropdownStyles={styles.dropdownStyles}
                     dropdownItemStyles={styles.dropdownItemStyles}

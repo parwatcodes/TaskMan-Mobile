@@ -3,9 +3,11 @@ import { View, Text, StyleSheet, Pressable, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
-import { backgroundColor, borderColor, btnBgColor, lightBlue, lightRed, white } from '../helpers/colors';
 import ProjectForm from './Form/ProjectForm';
+import { updateProjectById, getProjectById } from '../api/project';
+import { backgroundColor, borderColor, btnBgColor, lightBlue, lightRed, white } from '../helpers/colors';
 
 const ProjectDetail = (props) => {
 
@@ -13,13 +15,36 @@ const ProjectDetail = (props) => {
 
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = React.useState(false);
+  const [selectedProject, setSelectedProject] = React.useState('');
 
   const toggleProjectForm = () => {
     setModalVisible(!modalVisible);
   };
 
-  const handleProjectUpdate = async (project) => {
+  React.useEffect(() => {
+    async function getProject() {
+      let project1 = await getProjectById(project.id)
 
+      setSelectedProject(project1)
+    }
+
+    getProject();
+  }, [project.id, modalVisible])
+
+  const updateProject = async (project) => {
+    let resp = await updateProjectById(project.id, project);
+    let { message, success } = resp;
+
+    Toast.show({
+      type: success ? 'success' : 'error',
+      text1: message
+    });
+
+    if (resp.success) {
+      setTimeout(() => {
+        setModalVisible(!modalVisible);
+      }, 1000)
+    }
   };
 
   const handleProjectDelete = (props) => Alert.alert('Delete Project', 'Are you sure!', [
@@ -34,7 +59,7 @@ const ProjectDetail = (props) => {
   return (
     <View style={styles.mainContainer}>
       <ProjectForm
-        onSave={handleProjectUpdate}
+        onSave={updateProject}
         project={project}
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
@@ -42,17 +67,17 @@ const ProjectDetail = (props) => {
       <View>
         <View>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Text style={styles.name}>{project.name}</Text>
-            <Text style={styles.projectStatus}>{project.status}</Text>
+            <Text style={styles.name}>{selectedProject.name}</Text>
+            <Text style={styles.projectStatus}>{selectedProject.status}</Text>
           </View>
-          <Text style={styles.description}>{project.description}</Text>
+          <Text style={styles.description}>{selectedProject.description}</Text>
         </View>
         <View>
           <View style={styles.memberWrapper}>
             <Text style={styles.headerText}>Members</Text>
             <View>
-              {project.members?.map(member => (
-                <Text style={styles.member}>{member.name}</Text>
+              {selectedProject.members?.map(member => (
+                <Text style={styles.member}>{member?.fullName || member?.name}</Text>
               ))}
             </View>
           </View>
