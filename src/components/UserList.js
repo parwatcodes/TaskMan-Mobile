@@ -1,13 +1,13 @@
 import React from 'react';
 import EnTypoIcon from 'react-native-vector-icons/Entypo';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
-
 import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
 
 import { addUser } from '../api/user';
 import UserForm from './Form/UserForm';
 import { USER_ROLE } from '../helpers/mappings';
-import { borderColor, btnBgColor, darkBlue, lightBlue, white } from '../helpers/colors';
+import { borderColor, btnBgColor, darkBlue, darkRed, lightBlue, white } from '../helpers/colors';
 
 const CardView = ({ user, handleOnUserClick }) => (
   <Pressable style={styles.card} onPress={handleOnUserClick}>
@@ -15,7 +15,7 @@ const CardView = ({ user, handleOnUserClick }) => (
 
     <Text style={styles.name}>{user.fullName || user.name}</Text>
     <Text style={{
-      backgroundColor: lightBlue,
+      backgroundColor: user.role === 'admin' ? darkRed : lightBlue,
       color: white,
       paddingHorizontal: 10,
       paddingVertical: 1,
@@ -58,8 +58,22 @@ const UserList = (props) => {
     setModalVisible(!modalVisible);
   };
 
+
   const handleAddUser = async (user) => {
-    await addUser(user);
+    let resp = await addUser(user);
+    let { message, success } = resp;
+
+    Toast.show({
+      type: success ? 'success' : 'error',
+      text1: message
+    });
+
+    if (resp.success) {
+      setTimeout(() => {
+        setModalVisible(!modalVisible);
+        props.navigation.navigate('User List')
+      }, 1000)
+    }
   };
 
   return (

@@ -18,10 +18,12 @@ const ProjectForm = (props) => {
     members: []
   });
   const [memberList, setMemberList] = React.useState([]);
+  const [selectedMembers, setSelectedMembers] = React.useState('');
   const [statusDropdown, setStatusDropdown] = React.useState({
     key: 'not-started',
     value: 'Not Started'
   });
+  let [defaultOptionMem, setDefaultOPtionMem] = React.useState([])
 
   React.useEffect(() => {
     async function getMemberList() {
@@ -53,6 +55,16 @@ const ProjectForm = (props) => {
 
       setStatusDropdown(initialStatus);
     }
+
+    if (props.project?.members) {
+     let m = props.members?.map(mem => ({
+        value: mem.fullName || mem.name,
+        key: mem.id
+      }))
+
+      setDefaultOPtionMem(m);
+    }
+
   }, [props.project]);
 
   let projectStatus = transformObject(PROJECT_STATUS);
@@ -65,6 +77,7 @@ const ProjectForm = (props) => {
   };
 
   const handleSubmit = () => {
+
     selectedProject.members = selectedMembers;
     props.onSave(selectedProject);
   };
@@ -142,6 +155,7 @@ const ProjectForm = (props) => {
                   }}
                   data={memberList}
                   save="key"
+                  defaultOption={defaultOptionMem}
                   boxStyles={styles.dropdownStyles}
                   dropdownStyles={styles.dropdownStyles}
                   dropdownItemStyles={styles.dropdownItemStyles}

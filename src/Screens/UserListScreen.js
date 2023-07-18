@@ -19,6 +19,7 @@ const UserListScreen = (props) => {
 
   return (
     <UserList
+      {...props}
       data={users}
       handleOnUserClick={handleOnUserClick}
     />

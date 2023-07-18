@@ -39,9 +39,17 @@ export async function createProject(data) {
 
     appData?.projects?.push({ ...data, id: uuid.v4() });
 
-    await AsyncStorage.setItem(APP_DATA, stringifyIt(jsonData));
+    await AsyncStorage.setItem(APP_DATA, stringifyIt(appData));
+    return {
+      success: true,
+      message: 'Project created'
+    };
   } catch (e) {
-    // save error
+    console.log('error adding a project', e)
+    return {
+      success: false,
+      message: e.toString()
+    };
   }
 }
 
@@ -60,7 +68,7 @@ export async function updateProjectById(id, data) {
     };
   } catch (error) {
     return {
-      success: true,
+      success: false,
       message: error.toString()
     };
   }

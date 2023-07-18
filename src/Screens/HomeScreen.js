@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native'
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import FoundationIcon from 'react-native-vector-icons/Foundation';
@@ -17,6 +18,8 @@ import { darkBlue, lightPink, lighterPink, white } from '../helpers/colors';
 const Tab = createBottomTabNavigator();
 
 const HomeScreen = () => {
+  const navigation = useNavigation();
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -67,7 +70,12 @@ const HomeScreen = () => {
             color: darkBlue,
             fontSize: 16,
             marginRight: 15
-          }}>
+          }}
+          onPress={() => {
+            console.log('cc');
+            navigation.navigate('Login')
+          }}
+          >
             <Text style={{
             fontWeight: 700
             }}>PK</Text>

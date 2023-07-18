@@ -1,13 +1,15 @@
 import React from 'react';
 import EnTypoIcon from 'react-native-vector-icons/Entypo';
 import AntIcon from 'react-native-vector-icons/AntDesign';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
 
+import { addTask } from '../api/task';
 import TaskForm from './Form/TaskForm';
-import { priorityToLabelColor, statusToCardColor, TASK_STATUS } from '../helpers/mappings';
 import { borderColor, btnBgColor, darkBlue, lightBlue, white } from '../helpers/colors';
+import { priorityToLabelColor, statusToCardColor, TASK_STATUS } from '../helpers/mappings';
 
 const CardView = ({ task, handleOnTaskClick }) => (
   <Pressable style={styles.card} onPress={handleOnTaskClick}>
@@ -64,7 +66,20 @@ const TaskList = (props) => {
   };
 
   const handleAddTask = async (task) => {
-    await addUser(task);
+    let resp = await addTask(task);
+    let { message, success } = resp;
+
+    Toast.show({
+      type: success ? 'success' : 'error',
+      text1: message
+    });
+
+    if (resp.success) {
+      setTimeout(() => {
+        setModalVisible(!modalVisible);
+        // props.navigation.navigate('Task List')
+      }, 1000)
+    }
   };
 
   return (

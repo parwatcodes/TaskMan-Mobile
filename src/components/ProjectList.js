@@ -1,12 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, FlatList, Pressable, ImageBackground } from 'react-native';
 import ProgressCircle from 'react-native-progress-circle';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 import ProjectForm from './Form/ProjectForm';
 import { projectStatusColor, PROJECT_STATUS } from '../helpers/mappings';
 import { backgroundColor, btnBgColor, darkGreen, lightBlue, lightGreen, white } from '../helpers/colors';
 import { SCREEN_2 } from '../helpers/constant';
 import { getNameAffr } from '../helpers/utils';
+import { createProject } from '../api/project';
 
 const CardView = ({ item, handleOnProjectClick }) => (
   <Pressable style={styles.card} onPress={handleOnProjectClick}>
@@ -29,7 +31,7 @@ const CardView = ({ item, handleOnProjectClick }) => (
           <View>
             <Text>Members: </Text>
             <View style={{ flexDirection: 'row', marginTop: 5 }}>
-              {item?.members.map(member =>
+              {item?.[{}]?.map(member =>
               <Text style={styles.circle}>{getNameAffr(member?.fullName || member?.name)}</Text>
               )}
             </View>
@@ -70,8 +72,23 @@ const ProjectList = (props) => {
     setModalVisible(!modalVisible);
   };
 
-  const handleAddProject = (project) => {
+  const handleAddProject = async (project) => {
     console.log('project from list', project)
+    let resp = await createProject(project);
+
+    let { message, success } = resp;
+
+    Toast.show({
+      type: success ? 'success' : 'error',
+      text1: message
+    });
+
+    if (resp.success) {
+      setTimeout(() => {
+        setModalVisible(!modalVisible);
+        props.navigation.navigate('Project List')
+      }, 1000)
+    }
   };
 
   return (

@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
-import { SelectList } from 'react-native-dropdown-select-list';
-import { View, Text, StyleSheet, Pressable, TextInput, Modal, TouchableOpacity, Button } from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import React from 'react';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import { SelectList } from 'react-native-dropdown-select-list';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { View, Text, StyleSheet, Pressable, TextInput, Modal, TouchableOpacity, Button } from 'react-native';
 
+import { getMembers } from '../../api/user';
+import { getProjects } from '../../api/project';
+import { transformObject } from '../../helpers/utils';
 import { borderColor, darkBlue, lightBlue, white } from '../../helpers/colors';
 import { PROJECT_STATUS, TASK_PRIORITY_LABEL, TASK_STATUS } from '../../helpers/mappings';
-import { transformObject } from '../../helpers/utils';
-import { getProjects } from '../../api/project';
-import { getMembers } from '../../api/user';
 
 const TaskForm = (props) => {
   const { modalVisible, setModalVisible } = props;
@@ -243,6 +244,9 @@ const TaskForm = (props) => {
                 <Text style={styles.doneText}>Done</Text>
               </TouchableOpacity>
             </View>
+            <Toast
+              position='top'
+            />
           </View>
         </View>
       </Modal>

@@ -32,8 +32,17 @@ export async function addUser(data) {
 
     appData?.users?.push({ ...data, id: uuid.v4() });
     await AsyncStorage.setItem(APP_DATA, stringifyIt(appData));
+
+    return {
+      success: true,
+      message: 'User added'
+    }
   } catch (error) {
     console.log('err', error)
+    return {
+      success: false,
+      message: error.toString()
+    }
   }
 }
 

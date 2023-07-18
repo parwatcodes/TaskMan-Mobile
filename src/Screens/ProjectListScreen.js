@@ -21,6 +21,7 @@ const ProjectListScreen = (props) => {
 
   return (
     <ProjectList
+      {...props}
       data={projects}
       handleOnProjectClick={handleOnProjectClick}
     />
