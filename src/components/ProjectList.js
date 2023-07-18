@@ -51,7 +51,7 @@ const CardView = ({ item, handleOnProjectClick }) => (
           shadowColor="#999"
           bgColor="#fff"
         >
-          <Text style={{ fontSize: 14, fontWeight: 500 }}>{'30%'}</Text>
+          <Text style={{ fontSize: 14, fontWeight: 500 }}>{Math.floor(Math.random() * 100) + '%'}</Text>
         </ProgressCircle>
       </View>
     </View>

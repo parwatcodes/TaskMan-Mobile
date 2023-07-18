@@ -34,7 +34,7 @@ const CardView = ({ task, handleOnTaskClick }) => (
           fontWeight: 500,
           fontSize: 14,
           marginLeft: 5
-        }}>{task.assigneeName}</Text>
+        }}>{task.assigneeName || 'email.holder@gmail.com'}</Text>
       </View>
     </View>
     <View style={{ borderBottomColor: borderColor, borderBottomWidth: 0.5 }} />
@@ -46,12 +46,12 @@ const CardView = ({ task, handleOnTaskClick }) => (
         borderRadius: 5,
         color: white,
         fontWeight: 500,
-        backgroundColor: statusToCardColor[task.status],
-      }}>{TASK_STATUS[task.status]}</Text>
+        backgroundColor: statusToCardColor[task.status || 'todo'],
+      }}>{TASK_STATUS[task.status || 'todo']}</Text>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 10 }}>
-        <FontAwesomeIcon style={{ marginRight: 10 }} size={20} color={priorityToLabelColor[task.priority]} name="tag" />
+        <FontAwesomeIcon style={{ marginRight: 10 }} size={20} color={priorityToLabelColor[task.priority || 'low']} name="tag" />
         <MCIcon size={20} name="clock" />
-        <Text style={{ fontWeight: 500, marginLeft: 2 }}>{task.startDate}</Text>
+        <Text style={{ fontWeight: 500, marginLeft: 2 }}>{task.startDate || new Date().toLocaleString()}</Text>
       </View>
     </View>
   </Pressable>
